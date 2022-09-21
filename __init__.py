@@ -12,6 +12,8 @@ from .operators import (
 
 from .menus import DeleteMenu
 
+from .property_groups import FamilySettings
+
 bl_info = {
     "name": "Family",
     "author": "Cunarist",
@@ -23,10 +25,15 @@ bl_info = {
 }
 
 
-def add_to_menu(self, context):
+def draw_in_3d_view_object_menu(self, context):
     operator = self.layout.operator(SelectHierarchy.bl_idname)
     operator.direction = "CHILD"
     operator.extend = True
+
+
+def draw_in_topbar_edit_menu(self, context):
+    self.layout.separator()
+    self.layout.prop(context.scene.family_settings, "duplicate_entire_hierarchy")
 
 
 def register():
@@ -40,8 +47,13 @@ def register():
 
     bpy.utils.register_class(DeleteMenu)
 
-    bpy.types.VIEW3D_MT_object.append(add_to_menu)
-    bpy.types.VIEW3D_MT_object_context_menu.append(add_to_menu)
+    bpy.utils.register_class(FamilySettings)
+
+    bpy.types.VIEW3D_MT_object.append(draw_in_3d_view_object_menu)
+    bpy.types.VIEW3D_MT_object_context_menu.append(draw_in_3d_view_object_menu)
+    bpy.types.TOPBAR_MT_edit.append(draw_in_topbar_edit_menu)
+
+    bpy.types.Scene.family_settings = bpy.props.PointerProperty(type=FamilySettings)
 
 
 def unregister():
@@ -55,8 +67,13 @@ def unregister():
 
     bpy.utils.unregister_class(DeleteMenu)
 
-    bpy.types.VIEW3D_MT_object.remove(add_to_menu)
-    bpy.types.VIEW3D_MT_object_context_menu.remove(add_to_menu)
+    bpy.utils.unregister_class(FamilySettings)
+
+    bpy.types.VIEW3D_MT_object.remove(draw_in_3d_view_object_menu)
+    bpy.types.VIEW3D_MT_object_context_menu.remove(draw_in_3d_view_object_menu)
+    bpy.types.TOPBAR_MT_edit.remove(draw_in_topbar_edit_menu)
+
+    del bpy.types.Scene.family_settings
 
 
 # This allows you to run the script directly from Blender's Text editor
