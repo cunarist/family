@@ -75,7 +75,8 @@ def unregister():
     bpy.types.VIEW3D_MT_object_context_menu.remove(draw_in_3d_view_object_menu)
     bpy.types.TOPBAR_MT_edit.remove(draw_in_topbar_edit_menu)
 
-    del bpy.types.Scene.family_settings
+    if hasattr(bpy.types.Scene, "family_settings"):
+        del bpy.types.Scene.family_settings
 
 
 # This allows you to run the script directly from Blender's Text editor

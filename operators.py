@@ -15,6 +15,9 @@ class DuplicateMove(bpy.types.Operator):
 
         selected_objects = context.selected_objects
 
+        if len(selected_objects) == 0:
+            return {"CANCELLED"}
+
         if take_hierarchy:
             targets = set()
             for selected_object in selected_objects:
@@ -58,6 +61,9 @@ class DuplicateMoveLinked(bpy.types.Operator):
 
         selected_objects = context.selected_objects
 
+        if len(selected_objects) == 0:
+            return {"CANCELLED"}
+
         if take_hierarchy:
             targets = set()
             for selected_object in selected_objects:
@@ -97,6 +103,11 @@ class Delete(bpy.types.Operator):
 
     def execute(self, context):
 
+        selected_objects = context.selected_objects
+
+        if len(selected_objects) == 0:
+            return {"CANCELLED"}
+
         bpy.ops.wm.call_menu(name="OBJECT_MT_delete_menu")
 
         return {"FINISHED"}
@@ -113,6 +124,9 @@ class DeleteSimple(bpy.types.Operator):
     def execute(self, context):
 
         selected_objects = context.selected_objects
+
+        if len(selected_objects) == 0:
+            return {"CANCELLED"}
 
         for selected_object in selected_objects:
             bpy.data.objects.remove(selected_object, do_unlink=True)
@@ -131,6 +145,9 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
     def execute(self, context):
 
         selected_objects = context.selected_objects
+
+        if len(selected_objects) == 0:
+            return {"CANCELLED"}
 
         targets = set()
         for selected_object in selected_objects:
@@ -157,6 +174,9 @@ class DeleteHierarchy(bpy.types.Operator):
     def execute(self, context):
 
         selected_objects = context.selected_objects
+
+        if len(selected_objects) == 0:
+            return {"CANCELLED"}
 
         targets = set(selected_objects)
         for selected_object in selected_objects:
@@ -193,6 +213,9 @@ class SelectHierarchy(bpy.types.Operator):
 
         selected_objects = context.selected_objects
 
+        if len(selected_objects) == 0:
+            return {"CANCELLED"}
+
         if not self.extend:
             for selected_object in selected_objects:
                 selected_object.select_set(False)
@@ -224,6 +247,9 @@ class SelectHierarchySimple(bpy.types.Operator):
     def execute(self, context):
 
         selected_objects = context.selected_objects
+
+        if len(selected_objects) == 0:
+            return {"CANCELLED"}
 
         targets = set()
         for selected_object in selected_objects:
