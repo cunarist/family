@@ -233,6 +233,11 @@ class SelectHierarchy(bpy.types.Operator):
         for target in targets:
             target.select_set(True)
 
+        selected_objects = context.selected_objects
+        for selected_object in selected_objects:
+            if selected_object.parent not in selected_objects:
+                context.view_layer.objects.active = selected_object
+
         return {"FINISHED"}
 
 
@@ -257,5 +262,10 @@ class SelectHierarchySimple(bpy.types.Operator):
             targets.update(all_children)
         for target in targets:
             target.select_set(True)
+
+        selected_objects = context.selected_objects
+        for selected_object in selected_objects:
+            if selected_object.parent not in selected_objects:
+                context.view_layer.objects.active = selected_object
 
         return {"FINISHED"}
