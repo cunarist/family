@@ -21,7 +21,6 @@ class DuplicateMove(bpy.types.Operator):
         targets = set()
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
-            targets.add(selected_object)
             targets.update(all_children)
         for target in targets:
             target.select_set(True)
@@ -59,7 +58,6 @@ class DuplicateMoveLinked(bpy.types.Operator):
         targets = set()
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
-            targets.add(selected_object)
             targets.update(all_children)
         for target in targets:
             target.select_set(True)
@@ -114,9 +112,8 @@ class DeleteSelected(bpy.types.Operator):
         # The original script
         selected_objects = context.selected_objects
 
-        targets = selected_objects
-        for target in targets:
-            bpy.data.objects.remove(target, do_unlink=True)
+        for selected_object in selected_objects:
+            bpy.data.objects.remove(selected_object, do_unlink=True)
 
         # Lets Blender know the operator finished successfully.
         return {"FINISHED"}
@@ -147,9 +144,8 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
             target.select_set(True)
         bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
 
-        targets = selected_objects
-        for target in targets:
-            bpy.data.objects.remove(target, do_unlink=True)
+        for selected_object in selected_objects:
+            bpy.data.objects.remove(selected_object, do_unlink=True)
 
         # Lets Blender know the operator finished successfully.
         return {"FINISHED"}
@@ -172,10 +168,9 @@ class DeleteHierarchy(bpy.types.Operator):
         # The original script
         selected_objects = context.selected_objects
 
-        targets = set()
+        targets = set(selected_objects)
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
-            targets.add(selected_object)
             targets.update(all_children)
         for target in targets:
             bpy.data.objects.remove(target, do_unlink=True)
@@ -195,17 +190,40 @@ class SelectHierarchy(bpy.types.Operator):
     # Enable undo for the operator.
     bl_options = {"REGISTER", "UNDO"}
 
+    direction: bpy.props.EnumProperty(
+        name="Direction",
+        items=[
+            ("CHILD", "Select Child", "", 1),
+            ("PARENT", "Select Parent", "", 2),
+        ],
+        default="CHILD",
+    )
+    extend: bpy.props.BoolProperty(
+        name="Extend",
+        default=True,
+    )
+
     # execute() is called when running the operator.
     def execute(self, context):
 
         # The original script
         selected_objects = context.selected_objects
 
+        if not self.extend:
+            for selected_object in selected_objects:
+                selected_object.select_set(False)
+
         targets = set()
-        for selected_object in selected_objects:
-            all_children = selected_object.children_recursive
-            targets.add(selected_object)
-            targets.update(all_children)
+        if self.direction == "CHILD":
+            for selected_object in selected_objects:
+                all_children = selected_object.children_recursive
+                targets.update(all_children)
+        elif self.direction == "PARENT":
+            for selected_object in selected_objects:
+                focus = selected_object.parent
+                while focus is not None:
+                    targets.add(focus)
+                    focus = focus.parent
         for target in targets:
             target.select_set(True)
 

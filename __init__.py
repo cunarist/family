@@ -24,7 +24,9 @@ bl_info = {
 
 
 def add_to_menu(self, context):
-    self.layout.operator(SelectHierarchy.bl_idname)
+    operator = self.layout.operator(SelectHierarchy.bl_idname)
+    operator.direction = "CHILD"
+    operator.extend = True
 
 
 def register():
