@@ -15,7 +15,7 @@ from .menus import DeleteMenu
 bl_info = {
     "name": "Family",
     "author": "Cunarist",
-    "version": (1, 2),
+    "version": (1, 3),
     "blender": (2, 80, 0),
     "description": "An addon for Blender with duplicate and delete operations including children",
     "category": "Object",
