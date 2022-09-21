@@ -5,6 +5,7 @@ from .operators import (
     DuplicateHierarchyLinked,
     Delete,
     DeleteSelected,
+    DeleteKeepChildrenTransformation,
     DeleteHierarchy,
 )
 
@@ -31,6 +32,7 @@ def register():
     bpy.utils.register_class(DuplicateHierarchyLinked)
     bpy.utils.register_class(Delete)
     bpy.utils.register_class(DeleteSelected)
+    bpy.utils.register_class(DeleteKeepChildrenTransformation)
     bpy.utils.register_class(DeleteHierarchy)
 
     bpy.utils.register_class(DeleteMenu)
@@ -44,6 +46,7 @@ def unregister():
     bpy.utils.unregister_class(DuplicateHierarchyLinked)
     bpy.utils.unregister_class(Delete)
     bpy.utils.unregister_class(DeleteSelected)
+    bpy.utils.unregister_class(DeleteKeepChildrenTransformation)
     bpy.utils.unregister_class(DeleteHierarchy)
 
     bpy.utils.unregister_class(DeleteMenu)

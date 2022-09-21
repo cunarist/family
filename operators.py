@@ -17,6 +17,7 @@ class DuplicateHierarchy(bpy.types.Operator):
 
         # The original script
         selected_objects = context.selected_objects
+
         targets = []
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
@@ -47,6 +48,7 @@ class DuplicateHierarchyLinked(bpy.types.Operator):
 
         # The original script
         selected_objects = context.selected_objects
+
         targets = []
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
@@ -97,6 +99,40 @@ class DeleteSelected(bpy.types.Operator):
 
         # The original script
         selected_objects = context.selected_objects
+
+        targets = selected_objects
+        for target in targets:
+            bpy.data.objects.remove(target, do_unlink=True)
+
+        # Lets Blender know the operator finished successfully.
+        return {"FINISHED"}
+
+
+class DeleteKeepChildrenTransformation(bpy.types.Operator):
+    # Use this as a tooltip for menu items and buttons.
+    """Delete selected objects"""
+
+    # Unique identifier for buttons and menu items to reference.
+    bl_idname = "object.delete_keep_children_transformation"
+    # Display name in the interface.
+    bl_label = "Delete and Keep Children Transformation"
+    # Enable undo for the operator.
+    bl_options = {"REGISTER", "UNDO"}
+
+    # execute() is called when running the operator.
+    def execute(self, context):
+
+        # The original script
+        selected_objects = context.selected_objects
+
+        targets = []
+        for selected_object in selected_objects:
+            children = selected_object.children
+            targets += children
+        for target in targets:
+            target.select_set(True)
+        bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
+
         targets = selected_objects
         for target in targets:
             bpy.data.objects.remove(target, do_unlink=True)
@@ -121,6 +157,7 @@ class DeleteHierarchy(bpy.types.Operator):
 
         # The original script
         selected_objects = context.selected_objects
+
         targets = []
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
