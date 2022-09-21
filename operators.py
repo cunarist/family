@@ -8,7 +8,7 @@ class DuplicateMove(bpy.types.Operator):
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.duplicate_move"
     # Display name in the interface.
-    bl_label = "Duplicate Hierarchy"
+    bl_label = "Duplicate"
     # Enable undo for the operator.
     bl_options = {"REGISTER", "UNDO"}
 
@@ -40,7 +40,7 @@ class DuplicateMoveLinked(bpy.types.Operator):
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.duplicate_move_linked"
     # Display name in the interface.
-    bl_label = "Duplicate Hierarchy Linked"
+    bl_label = "Duplicate Linked"
     # Enable undo for the operator.
     bl_options = {"REGISTER", "UNDO"}
 
