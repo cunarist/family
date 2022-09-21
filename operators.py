@@ -102,7 +102,7 @@ class DeleteSelected(bpy.types.Operator):
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.delete_selected"
     # Display name in the interface.
-    bl_label = "Delete Selected"
+    bl_label = "Delete"
     # Enable undo for the operator.
     bl_options = {"REGISTER", "UNDO"}
 
