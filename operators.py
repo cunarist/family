@@ -182,3 +182,32 @@ class DeleteHierarchy(bpy.types.Operator):
 
         # Lets Blender know the operator finished successfully.
         return {"FINISHED"}
+
+
+class SelectHierarchy(bpy.types.Operator):
+    # Use this as a tooltip for menu items and buttons.
+    """Select children of the selected objects including themselves"""
+
+    # Unique identifier for buttons and menu items to reference.
+    bl_idname = "object.select_hierarchy"
+    # Display name in the interface.
+    bl_label = "Select Hierarchy"
+    # Enable undo for the operator.
+    bl_options = {"REGISTER", "UNDO"}
+
+    # execute() is called when running the operator.
+    def execute(self, context):
+
+        # The original script
+        selected_objects = context.selected_objects
+
+        targets = set()
+        for selected_object in selected_objects:
+            all_children = selected_object.children_recursive
+            targets.add(selected_object)
+            targets.update(all_children)
+        for target in targets:
+            target.select_set(True)
+
+        # Lets Blender know the operator finished successfully.
+        return {"FINISHED"}
