@@ -11,7 +11,7 @@ bl_info = {
 
 class DuplicateHierarchy(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Duplicate selected objects including their children, similar to shift+D."""
+    """Duplicate selected objects including their children"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.duplicate_hierarchy"
@@ -41,7 +41,7 @@ class DuplicateHierarchy(bpy.types.Operator):
 
 class DuplicateHierarchyLinked(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Duplicate linked selected objects including their children, similar to alt+D."""
+    """Duplicate linked selected objects including their children"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.duplicate_hierarchy_linked"
@@ -111,6 +111,7 @@ def register():
         self.layout.operator(DuplicateHierarchyLinked.bl_idname)
 
     bpy.types.VIEW3D_MT_object.append(job)
+    bpy.types.VIEW3D_MT_object_context_menu.append(job)
 
 
 def unregister():
