@@ -30,6 +30,10 @@ class DuplicateMove(bpy.types.Operator):
             if selected_object.parent in selected_objects:
                 selected_object.select_set(False)
 
+        selected_objects = context.selected_objects
+        if len(selected_objects) > 0:
+            context.view_layer.objects.active = selected_objects[0]
+
         return {"FINISHED"}
 
     def invoke(self, context, event):
@@ -68,6 +72,10 @@ class DuplicateMoveLinked(bpy.types.Operator):
         for selected_object in selected_objects:
             if selected_object.parent in selected_objects:
                 selected_object.select_set(False)
+
+        selected_objects = context.selected_objects
+        if len(selected_objects) > 0:
+            context.view_layer.objects.active = selected_objects[0]
 
         return {"FINISHED"}
 
