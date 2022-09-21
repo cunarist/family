@@ -110,7 +110,7 @@ class DeleteSelected(bpy.types.Operator):
 
 class DeleteKeepChildrenTransformation(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Delete selected objects"""
+    """Delete selected objects and keep children transformation"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.delete_keep_children_transformation"
