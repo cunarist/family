@@ -27,6 +27,7 @@ bl_info = {
 
 
 def draw_in_3d_view_object_menu(self, context):
+    self.layout.separator()
     self.layout.operator(SelectHierarchySimple.bl_idname)
 
 
