@@ -4,7 +4,7 @@ from .operators import (
     DuplicateMove,
     DuplicateMoveLinked,
     Delete,
-    DeleteSelected,
+    DeleteSimple,
     DeleteKeepChildrenTransformation,
     DeleteHierarchy,
     SelectHierarchy,
@@ -40,7 +40,7 @@ def register():
     bpy.utils.register_class(DuplicateMove)
     bpy.utils.register_class(DuplicateMoveLinked)
     bpy.utils.register_class(Delete)
-    bpy.utils.register_class(DeleteSelected)
+    bpy.utils.register_class(DeleteSimple)
     bpy.utils.register_class(DeleteKeepChildrenTransformation)
     bpy.utils.register_class(DeleteHierarchy)
     bpy.utils.register_class(SelectHierarchy)
@@ -61,7 +61,7 @@ def unregister():
     bpy.utils.unregister_class(DuplicateMove)
     bpy.utils.unregister_class(DuplicateMoveLinked)
     bpy.utils.unregister_class(Delete)
-    bpy.utils.unregister_class(DeleteSelected)
+    bpy.utils.unregister_class(DeleteSimple)
     bpy.utils.unregister_class(DeleteKeepChildrenTransformation)
     bpy.utils.unregister_class(DeleteHierarchy)
     bpy.utils.unregister_class(SelectHierarchy)

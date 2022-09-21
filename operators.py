@@ -84,7 +84,7 @@ class Delete(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class DeleteSelected(bpy.types.Operator):
+class DeleteSimple(bpy.types.Operator):
 
     "Delete the selected objects"
 
