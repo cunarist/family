@@ -8,6 +8,7 @@ from .operators import (
     DeleteKeepChildrenTransformation,
     DeleteHierarchy,
     SelectHierarchy,
+    SelectHierarchySimple,
 )
 
 from .menus import DeleteMenu
@@ -26,14 +27,12 @@ bl_info = {
 
 
 def draw_in_3d_view_object_menu(self, context):
-    operator = self.layout.operator(SelectHierarchy.bl_idname)
-    operator.direction = "CHILD"
-    operator.extend = True
+    self.layout.operator(SelectHierarchySimple.bl_idname)
 
 
 def draw_in_topbar_edit_menu(self, context):
     self.layout.separator()
-    self.layout.prop(context.scene.family_settings, "duplicate_entire_hierarchy")
+    self.layout.prop(context.scene.family_settings, "duplicate_hierarchy")
 
 
 def register():
@@ -44,6 +43,7 @@ def register():
     bpy.utils.register_class(DeleteKeepChildrenTransformation)
     bpy.utils.register_class(DeleteHierarchy)
     bpy.utils.register_class(SelectHierarchy)
+    bpy.utils.register_class(SelectHierarchySimple)
 
     bpy.utils.register_class(DeleteMenu)
 
@@ -64,6 +64,7 @@ def unregister():
     bpy.utils.unregister_class(DeleteKeepChildrenTransformation)
     bpy.utils.unregister_class(DeleteHierarchy)
     bpy.utils.unregister_class(SelectHierarchy)
+    bpy.utils.unregister_class(SelectHierarchySimple)
 
     bpy.utils.unregister_class(DeleteMenu)
 

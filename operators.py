@@ -3,7 +3,7 @@ import bpy  # type:ignore
 
 class DuplicateMove(bpy.types.Operator):
 
-    """Duplicate the selected objects including their children and move them"""
+    "Duplicate the selected objects and move them"
 
     bl_idname = "object.duplicate_move"
     bl_label = "Duplicate"
@@ -11,7 +11,7 @@ class DuplicateMove(bpy.types.Operator):
 
     def execute(self, context):
 
-        take_hierarchy = context.scene.family_settings.duplicate_entire_hierarchy
+        take_hierarchy = context.scene.family_settings.duplicate_hierarchy
 
         selected_objects = context.selected_objects
 
@@ -37,7 +37,7 @@ class DuplicateMove(bpy.types.Operator):
 
 class DuplicateMoveLinked(bpy.types.Operator):
 
-    """Duplicate the selected objects including their children, but not their object data, and move them"""
+    "Duplicate the selected objects, but not their object data, and move them"
 
     bl_idname = "object.duplicate_move_linked"
     bl_label = "Duplicate Linked"
@@ -45,7 +45,7 @@ class DuplicateMoveLinked(bpy.types.Operator):
 
     def execute(self, context):
 
-        take_hierarchy = context.scene.family_settings.duplicate_entire_hierarchy
+        take_hierarchy = context.scene.family_settings.duplicate_hierarchy
 
         selected_objects = context.selected_objects
 
@@ -71,7 +71,7 @@ class DuplicateMoveLinked(bpy.types.Operator):
 
 class Delete(bpy.types.Operator):
 
-    """Show delete menu"""
+    "Show delete menu"
 
     bl_idname = "object.delete"
     bl_label = "Delete"
@@ -86,7 +86,7 @@ class Delete(bpy.types.Operator):
 
 class DeleteSelected(bpy.types.Operator):
 
-    """Delete the selected objects"""
+    "Delete the selected objects"
 
     bl_idname = "object.delete_selected"
     bl_label = "Delete"
@@ -104,7 +104,7 @@ class DeleteSelected(bpy.types.Operator):
 
 class DeleteKeepChildrenTransformation(bpy.types.Operator):
 
-    """Delete the selected objects and keep children's transformation"""
+    "Delete the selected objects and keep children's transformation"
 
     bl_idname = "object.delete_keep_children_transformation"
     bl_label = "Delete and Keep Children's Transformation"
@@ -130,7 +130,7 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
 
 class DeleteHierarchy(bpy.types.Operator):
 
-    """Delete the selected objects including their children"""
+    "Delete the selected objects including their children"
 
     bl_idname = "object.delete_hierarchy"
     bl_label = "Delete Hierarchy"
@@ -152,7 +152,7 @@ class DeleteHierarchy(bpy.types.Operator):
 
 class SelectHierarchy(bpy.types.Operator):
 
-    """Select children of the selected objects including themselves"""
+    "Select objects up or down the hierarchy"
 
     bl_idname = "object.select_hierarchy"
     bl_label = "Select Hierarchy"
@@ -189,6 +189,28 @@ class SelectHierarchy(bpy.types.Operator):
                 focus = selected_object.parent
                 if focus is not None:
                     targets.add(focus)
+        for target in targets:
+            target.select_set(True)
+
+        return {"FINISHED"}
+
+
+class SelectHierarchySimple(bpy.types.Operator):
+
+    "Select children of the selected objects"
+
+    bl_idname = "object.select_hierarchy_simple"
+    bl_label = "Select Hierarchy"
+    bl_options = {"REGISTER", "UNDO"}
+
+    def execute(self, context):
+
+        selected_objects = context.selected_objects
+
+        targets = set()
+        for selected_object in selected_objects:
+            all_children = selected_object.children_recursive
+            targets.update(all_children)
         for target in targets:
             target.select_set(True)
 
