@@ -9,14 +9,14 @@ bl_info = {
 }
 
 
-class DuplicateFamily(bpy.types.Operator):
+class DuplicateHierarchy(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
     """Duplicate selected objects including their children, similar to shift+D."""
 
     # Unique identifier for buttons and menu items to reference.
-    bl_idname = "object.duplicate_family"
+    bl_idname = "object.duplicate_hierarchy"
     # Display name in the interface.
-    bl_label = "Duplicate Family"
+    bl_label = "Duplicate Hierarchy"
     # Enable undo for the operator.
     bl_options = {"REGISTER", "UNDO"}
 
@@ -39,14 +39,14 @@ class DuplicateFamily(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class DuplicateFamilyLinked(bpy.types.Operator):
+class DuplicateHierarchyLinked(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
     """Duplicate linked selected objects including their children, similar to alt+D."""
 
     # Unique identifier for buttons and menu items to reference.
-    bl_idname = "object.duplicate_family_linked"
+    bl_idname = "object.duplicate_hierarchy_linked"
     # Display name in the interface.
-    bl_label = "Duplicate Family Linked"
+    bl_label = "Duplicate Hierarchy Linked"
     # Enable undo for the operator.
     bl_options = {"REGISTER", "UNDO"}
 
@@ -69,14 +69,14 @@ class DuplicateFamilyLinked(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class DeleteFamily(bpy.types.Operator):
+class DeleteHierarchy(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
     """Delete selected objects including their children"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.delete"
     # Display name in the interface.
-    bl_label = "Delete Family"
+    bl_label = "Delete Hierarchy"
     # Enable undo for the operator.
     bl_options = {"REGISTER", "UNDO"}
 
@@ -101,22 +101,22 @@ class DeleteFamily(bpy.types.Operator):
 
 
 def register():
-    bpy.utils.register_class(DuplicateFamily)
-    bpy.utils.register_class(DuplicateFamilyLinked)
-    bpy.utils.register_class(DeleteFamily)
+    bpy.utils.register_class(DuplicateHierarchy)
+    bpy.utils.register_class(DuplicateHierarchyLinked)
+    bpy.utils.register_class(DeleteHierarchy)
 
     # Adds the new operator to an existing menu.
     def job(self, context):
-        self.layout.operator(DuplicateFamily.bl_idname)
-        self.layout.operator(DuplicateFamilyLinked.bl_idname)
+        self.layout.operator(DuplicateHierarchy.bl_idname)
+        self.layout.operator(DuplicateHierarchyLinked.bl_idname)
 
     bpy.types.VIEW3D_MT_object.append(job)
 
 
 def unregister():
-    bpy.utils.unregister_class(DuplicateFamily)
-    bpy.utils.unregister_class(DuplicateFamilyLinked)
-    bpy.utils.unregister_class(DeleteFamily)
+    bpy.utils.unregister_class(DuplicateHierarchy)
+    bpy.utils.unregister_class(DuplicateHierarchyLinked)
+    bpy.utils.unregister_class(DeleteHierarchy)
 
 
 # This allows you to run the script directly from Blender's Text editor
