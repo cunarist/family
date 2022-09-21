@@ -2,7 +2,9 @@ import bpy  # type:ignore
 
 bl_info = {
     "name": "Family",
+    "version": (1, 0),
     "blender": (2, 80, 0),
+    "description": "An addon for Blender with duplicate and delete operations including children",
     "category": "Object",
 }
 
