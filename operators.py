@@ -188,7 +188,7 @@ class SelectHierarchy(bpy.types.Operator):
     # Display name in the interface.
     bl_label = "Select Hierarchy"
     # Enable undo for the operator.
-    bl_options = {"REGISTER", "UNDO"}
+    bl_options = {"REGISTER", "UNDO_GROUPED"}
 
     direction: bpy.props.EnumProperty(
         name="Direction",
@@ -216,14 +216,13 @@ class SelectHierarchy(bpy.types.Operator):
         targets = set()
         if self.direction == "CHILD":
             for selected_object in selected_objects:
-                all_children = selected_object.children_recursive
-                targets.update(all_children)
+                children = selected_object.children
+                targets.update(children)
         elif self.direction == "PARENT":
             for selected_object in selected_objects:
                 focus = selected_object.parent
-                while focus is not None:
+                if focus is not None:
                     targets.add(focus)
-                    focus = focus.parent
         for target in targets:
             target.select_set(True)
 
