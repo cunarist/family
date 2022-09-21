@@ -1,6 +1,6 @@
 import bpy  # type:ignore
 
-from operators import DuplicateHierarchy, DuplicateHierarchyLinked, DeleteHierarchy
+from .operators import DuplicateHierarchy, DuplicateHierarchyLinked, DeleteHierarchy
 
 bl_info = {
     "name": "Family",
@@ -12,25 +12,26 @@ bl_info = {
     "doc_url": "https://cunarist.com/family",
 }
 
+# Adds the new operator to an existing menu.
+def add_to_menu(self, context):
+    self.layout.operator(DuplicateHierarchy.bl_idname)
+    self.layout.operator(DuplicateHierarchyLinked.bl_idname)
+
 
 def register():
     bpy.utils.register_class(DuplicateHierarchy)
     bpy.utils.register_class(DuplicateHierarchyLinked)
     bpy.utils.register_class(DeleteHierarchy)
-
-    # Adds the new operator to an existing menu.
-    def job(self, context):
-        self.layout.operator(DuplicateHierarchy.bl_idname)
-        self.layout.operator(DuplicateHierarchyLinked.bl_idname)
-
-    bpy.types.VIEW3D_MT_object.append(job)
-    bpy.types.VIEW3D_MT_object_context_menu.append(job)
+    bpy.types.VIEW3D_MT_object.append(add_to_menu)
+    bpy.types.VIEW3D_MT_object_context_menu.append(add_to_menu)
 
 
 def unregister():
     bpy.utils.unregister_class(DuplicateHierarchy)
     bpy.utils.unregister_class(DuplicateHierarchyLinked)
     bpy.utils.unregister_class(DeleteHierarchy)
+    bpy.types.VIEW3D_MT_object.remove(add_to_menu)
+    bpy.types.VIEW3D_MT_object_context_menu.remove(add_to_menu)
 
 
 # This allows you to run the script directly from Blender's Text editor
