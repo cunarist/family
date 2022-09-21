@@ -1,12 +1,12 @@
 import bpy  # type:ignore
 
 
-class DuplicateHierarchy(bpy.types.Operator):
+class DuplicateMove(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Duplicate selected objects including their children"""
+    """Duplicate the selected objects including their children and move them"""
 
     # Unique identifier for buttons and menu items to reference.
-    bl_idname = "object.duplicate_hierarchy"
+    bl_idname = "object.duplicate_move"
     # Display name in the interface.
     bl_label = "Duplicate Hierarchy"
     # Enable undo for the operator.
@@ -29,15 +29,16 @@ class DuplicateHierarchy(bpy.types.Operator):
         bpy.ops.object.duplicate(linked=False)
 
         # Lets Blender know the operator finished successfully.
-        return {"FINISHED"}
+        retuned = bpy.ops.transform.translate("INVOKE_DEFAULT")
+        return retuned
 
 
-class DuplicateHierarchyLinked(bpy.types.Operator):
+class DuplicateMoveLinked(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Duplicate linked selected objects including their children"""
+    """Duplicate the selected objects including their children, but not their object data, and move them"""
 
     # Unique identifier for buttons and menu items to reference.
-    bl_idname = "object.duplicate_hierarchy_linked"
+    bl_idname = "object.duplicate_move_linked"
     # Display name in the interface.
     bl_label = "Duplicate Hierarchy Linked"
     # Enable undo for the operator.
@@ -60,12 +61,13 @@ class DuplicateHierarchyLinked(bpy.types.Operator):
         bpy.ops.object.duplicate(linked=True)
 
         # Lets Blender know the operator finished successfully.
-        return {"FINISHED"}
+        retuned = bpy.ops.transform.translate("INVOKE_DEFAULT")
+        return retuned
 
 
 class Delete(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Delete selected objects including their children"""
+    """Delete the selected objects including their children"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.delete"
@@ -85,7 +87,7 @@ class Delete(bpy.types.Operator):
 
 class DeleteSelected(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Delete selected objects"""
+    """Delete the selected objects"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.delete_selected"
@@ -110,7 +112,7 @@ class DeleteSelected(bpy.types.Operator):
 
 class DeleteKeepChildrenTransformation(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Delete selected objects and keep children's transformation"""
+    """Delete the selected objects and keep children's transformation"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.delete_keep_children_transformation"
