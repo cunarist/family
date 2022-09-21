@@ -67,7 +67,7 @@ class DuplicateMoveLinked(bpy.types.Operator):
 
 class Delete(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Delete the selected objects including their children"""
+    """Show delete menu"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.delete"
@@ -145,7 +145,7 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
 
 class DeleteHierarchy(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Delete selected objects including their children"""
+    """Delete the selected objects including their children"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.delete_hierarchy"
