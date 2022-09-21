@@ -23,13 +23,13 @@ class DuplicateFamily(bpy.types.Operator):
 
         # The original script
         selected_objects = context.selected_objects
-        duplicate_targets = []
+        targets = []
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
-            duplicate_targets.append(selected_object)
-            duplicate_targets += all_children
-        for duplicate_target in duplicate_targets:
-            duplicate_target.select_set(True)
+            targets.append(selected_object)
+            targets += all_children
+        for target in targets:
+            target.select_set(True)
 
         bpy.ops.object.duplicate(linked=False)
 
@@ -53,13 +53,13 @@ class DuplicateFamilyLinked(bpy.types.Operator):
 
         # The original script
         selected_objects = context.selected_objects
-        duplicate_targets = []
+        targets = []
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
-            duplicate_targets.append(selected_object)
-            duplicate_targets += all_children
-        for duplicate_target in duplicate_targets:
-            duplicate_target.select_set(True)
+            targets.append(selected_object)
+            targets += all_children
+        for target in targets:
+            target.select_set(True)
 
         bpy.ops.object.duplicate(linked=True)
 
@@ -83,13 +83,13 @@ class DeleteFamily(bpy.types.Operator):
 
         # The original script
         selected_objects = context.selected_objects
-        duplicate_targets = []
+        targets = []
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
-            duplicate_targets.append(selected_object)
-            duplicate_targets += all_children
-        for duplicate_target in duplicate_targets:
-            duplicate_target.select_set(True)
+            targets.append(selected_object)
+            targets += all_children
+        for target in targets:
+            target.select_set(True)
 
         bpy.ops.object.delete()
 
