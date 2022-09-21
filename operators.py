@@ -27,10 +27,10 @@ class DuplicateMove(bpy.types.Operator):
             target.select_set(True)
 
         bpy.ops.object.duplicate(linked=False)
+        bpy.ops.transform.translate("INVOKE_DEFAULT")
 
         # Lets Blender know the operator finished successfully.
-        retuned = bpy.ops.transform.translate("INVOKE_DEFAULT")
-        return retuned
+        return {"FINISHED"}
 
 
 class DuplicateMoveLinked(bpy.types.Operator):
@@ -59,10 +59,10 @@ class DuplicateMoveLinked(bpy.types.Operator):
             target.select_set(True)
 
         bpy.ops.object.duplicate(linked=True)
+        bpy.ops.transform.translate("INVOKE_DEFAULT")
 
         # Lets Blender know the operator finished successfully.
-        retuned = bpy.ops.transform.translate("INVOKE_DEFAULT")
-        return retuned
+        return {"FINISHED"}
 
 
 class Delete(bpy.types.Operator):
