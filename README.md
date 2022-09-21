@@ -1,2 +1,2 @@
-# copycat
-An addon for blender enabling copy with children
+# About
+An addon for Blender with duplicate and delete operations including children
