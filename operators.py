@@ -18,11 +18,11 @@ class DuplicateMove(bpy.types.Operator):
         # The original script
         selected_objects = context.selected_objects
 
-        targets = []
+        targets = set()
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
-            targets.append(selected_object)
-            targets += all_children
+            targets.add(selected_object)
+            targets.update(all_children)
         for target in targets:
             target.select_set(True)
 
@@ -50,11 +50,11 @@ class DuplicateMoveLinked(bpy.types.Operator):
         # The original script
         selected_objects = context.selected_objects
 
-        targets = []
+        targets = set()
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
-            targets.append(selected_object)
-            targets += all_children
+            targets.add(selected_object)
+            targets.update(all_children)
         for target in targets:
             target.select_set(True)
 
@@ -127,10 +127,10 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
         # The original script
         selected_objects = context.selected_objects
 
-        targets = []
+        targets = set()
         for selected_object in selected_objects:
             children = selected_object.children
-            targets += children
+            targets.update(children)
         for target in targets:
             target.select_set(True)
         bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
@@ -160,11 +160,11 @@ class DeleteHierarchy(bpy.types.Operator):
         # The original script
         selected_objects = context.selected_objects
 
-        targets = []
+        targets = set()
         for selected_object in selected_objects:
             all_children = selected_object.children_recursive
-            targets.append(selected_object)
-            targets += all_children
+            targets.add(selected_object)
+            targets.update(all_children)
         for target in targets:
             bpy.data.objects.remove(target, do_unlink=True)
 
