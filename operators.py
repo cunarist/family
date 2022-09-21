@@ -25,6 +25,11 @@ class DuplicateMove(bpy.types.Operator):
 
         bpy.ops.object.duplicate(linked=False)
 
+        selected_objects = context.selected_objects
+        for selected_object in selected_objects:
+            if selected_object.parent in selected_objects:
+                selected_object.select_set(False)
+
         return {"FINISHED"}
 
     def invoke(self, context, event):
@@ -58,6 +63,11 @@ class DuplicateMoveLinked(bpy.types.Operator):
                 target.select_set(True)
 
         bpy.ops.object.duplicate(linked=True)
+
+        selected_objects = context.selected_objects
+        for selected_object in selected_objects:
+            if selected_object.parent in selected_objects:
+                selected_object.select_set(False)
 
         return {"FINISHED"}
 
