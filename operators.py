@@ -61,12 +61,56 @@ class DuplicateHierarchyLinked(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class DeleteHierarchy(bpy.types.Operator):
+class Delete(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
     """Delete selected objects including their children"""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.delete"
+    # Display name in the interface.
+    bl_label = "Delete"
+    # Enable undo for the operator.
+    bl_options = set()
+
+    # execute() is called when running the operator.
+    def execute(self, context):
+
+        bpy.ops.wm.call_menu(name="OBJECT_MT_delete_menu")
+
+        # Lets Blender know the operator finished successfully.
+        return {"FINISHED"}
+
+
+class DeleteSelected(bpy.types.Operator):
+    # Use this as a tooltip for menu items and buttons.
+    """Delete selected objects"""
+
+    # Unique identifier for buttons and menu items to reference.
+    bl_idname = "object.delete_selected"
+    # Display name in the interface.
+    bl_label = "Delete Selected"
+    # Enable undo for the operator.
+    bl_options = {"REGISTER", "UNDO"}
+
+    # execute() is called when running the operator.
+    def execute(self, context):
+
+        # The original script
+        selected_objects = context.selected_objects
+        targets = selected_objects
+        for target in targets:
+            bpy.data.objects.remove(target, do_unlink=True)
+
+        # Lets Blender know the operator finished successfully.
+        return {"FINISHED"}
+
+
+class DeleteHierarchy(bpy.types.Operator):
+    # Use this as a tooltip for menu items and buttons.
+    """Delete selected objects including their children"""
+
+    # Unique identifier for buttons and menu items to reference.
+    bl_idname = "object.delete_hierarchy"
     # Display name in the interface.
     bl_label = "Delete Hierarchy"
     # Enable undo for the operator.
@@ -87,6 +131,3 @@ class DeleteHierarchy(bpy.types.Operator):
 
         # Lets Blender know the operator finished successfully.
         return {"FINISHED"}
-
-    def invoke(self, context, event):
-        return context.window_manager.invoke_confirm(self, event)

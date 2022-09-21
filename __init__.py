@@ -1,6 +1,14 @@
 import bpy  # type:ignore
 
-from .operators import DuplicateHierarchy, DuplicateHierarchyLinked, DeleteHierarchy
+from .operators import (
+    DuplicateHierarchy,
+    DuplicateHierarchyLinked,
+    Delete,
+    DeleteSelected,
+    DeleteHierarchy,
+)
+
+from .menus import DeleteMenu
 
 bl_info = {
     "name": "Family",
@@ -21,7 +29,12 @@ def add_to_menu(self, context):
 def register():
     bpy.utils.register_class(DuplicateHierarchy)
     bpy.utils.register_class(DuplicateHierarchyLinked)
+    bpy.utils.register_class(Delete)
+    bpy.utils.register_class(DeleteSelected)
     bpy.utils.register_class(DeleteHierarchy)
+
+    bpy.utils.register_class(DeleteMenu)
+
     bpy.types.VIEW3D_MT_object.append(add_to_menu)
     bpy.types.VIEW3D_MT_object_context_menu.append(add_to_menu)
 
@@ -29,7 +42,12 @@ def register():
 def unregister():
     bpy.utils.unregister_class(DuplicateHierarchy)
     bpy.utils.unregister_class(DuplicateHierarchyLinked)
+    bpy.utils.unregister_class(Delete)
+    bpy.utils.unregister_class(DeleteSelected)
     bpy.utils.unregister_class(DeleteHierarchy)
+
+    bpy.utils.unregister_class(DeleteMenu)
+
     bpy.types.VIEW3D_MT_object.remove(add_to_menu)
     bpy.types.VIEW3D_MT_object_context_menu.remove(add_to_menu)
 
