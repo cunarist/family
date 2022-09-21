@@ -77,9 +77,3 @@ def unregister():
 
     if hasattr(bpy.types.Scene, "family_settings"):
         del bpy.types.Scene.family_settings
-
-
-# This allows you to run the script directly from Blender's Text editor
-# to test the add-on without having to install it.
-if __name__ == "__main__":
-    register()
