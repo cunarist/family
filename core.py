@@ -11,7 +11,7 @@ bl_info = {
 
 class DuplicateFamily(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Duplicate selected objects including children. Similar to shift+D."""
+    """Duplicate selected objects including their children, similar to shift+D."""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.duplicate_family"
@@ -41,7 +41,7 @@ class DuplicateFamily(bpy.types.Operator):
 
 class DuplicateFamilyLinked(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Duplicate linked selected objects including children. Similar to alt+D."""
+    """Duplicate linked selected objects including their children, similar to alt+D."""
 
     # Unique identifier for buttons and menu items to reference.
     bl_idname = "object.duplicate_family_linked"
@@ -71,10 +71,10 @@ class DuplicateFamilyLinked(bpy.types.Operator):
 
 class DeleteFamily(bpy.types.Operator):
     # Use this as a tooltip for menu items and buttons.
-    """Delete selected objects including children."""
+    """Delete selected objects including their children"""
 
     # Unique identifier for buttons and menu items to reference.
-    bl_idname = "object.delete_family"
+    bl_idname = "object.delete"
     # Display name in the interface.
     bl_label = "Delete Family"
     # Enable undo for the operator.
@@ -91,26 +91,26 @@ class DeleteFamily(bpy.types.Operator):
             targets.append(selected_object)
             targets += all_children
         for target in targets:
-            target.select_set(True)
-
-        bpy.ops.object.delete()
+            bpy.data.objects.remove(target, do_unlink=True)
 
         # Lets Blender know the operator finished successfully.
         return {"FINISHED"}
 
-
-def menu_func(self, context):
-    self.layout.operator(DuplicateFamily.bl_idname)
-    self.layout.operator(DuplicateFamilyLinked.bl_idname)
-    self.layout.operator(DeleteFamily.bl_idname)
+    def invoke(self, context, event):
+        return context.window_manager.invoke_confirm(self, event)
 
 
 def register():
     bpy.utils.register_class(DuplicateFamily)
     bpy.utils.register_class(DuplicateFamilyLinked)
     bpy.utils.register_class(DeleteFamily)
+
     # Adds the new operator to an existing menu.
-    bpy.types.VIEW3D_MT_object.append(menu_func)
+    def job(self, context):
+        self.layout.operator(DuplicateFamily.bl_idname)
+        self.layout.operator(DuplicateFamilyLinked.bl_idname)
+
+    bpy.types.VIEW3D_MT_object.append(job)
 
 
 def unregister():
