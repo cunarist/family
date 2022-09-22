@@ -8,6 +8,6 @@ class DeleteMenu(bpy.types.Menu):
     def draw(self, context):
         layout = self.layout
 
-        layout.operator("object.delete_simple")
+        layout.operator("object.delete")
         layout.operator("object.delete_keep_children_transformation")
         layout.operator("object.delete_hierarchy")

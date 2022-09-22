@@ -95,26 +95,6 @@ class Delete(bpy.types.Operator):
 
     bl_idname = "object.delete"
     bl_label = "Delete"
-    bl_options = set()
-
-    def execute(self, context):
-
-        selected_objects = context.selected_objects
-
-        if len(selected_objects) == 0:
-            return {"CANCELLED"}
-
-        bpy.ops.wm.call_menu(name="OBJECT_MT_delete_menu")
-
-        return {"FINISHED"}
-
-
-class DeleteSimple(bpy.types.Operator):
-
-    "Delete the selected objects"
-
-    bl_idname = "object.delete_simple"
-    bl_label = "Delete"
     bl_options = {"REGISTER", "UNDO"}
 
     def execute(self, context):
@@ -128,6 +108,17 @@ class DeleteSimple(bpy.types.Operator):
             bpy.data.objects.remove(selected_object, do_unlink=True)
 
         return {"FINISHED"}
+
+    def invoke(self, context, event):
+
+        selected_objects = context.selected_objects
+
+        if len(selected_objects) == 0:
+            return {"CANCELLED"}
+
+        bpy.ops.wm.call_menu(name="OBJECT_MT_delete_menu")
+
+        return {"CANCELLED"}
 
 
 class DeleteKeepChildrenTransformation(bpy.types.Operator):
