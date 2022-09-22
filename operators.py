@@ -91,7 +91,7 @@ class DuplicateMoveLinked(bpy.types.Operator):
 
 class Delete(bpy.types.Operator):
 
-    "Show delete menu"
+    "Delete selected objects"
 
     bl_idname = "object.delete"
     bl_label = "Delete"
@@ -123,7 +123,7 @@ class Delete(bpy.types.Operator):
 
 class DeleteKeepChildrenTransformation(bpy.types.Operator):
 
-    "Delete the selected objects and keep children's transformation"
+    "Delete selected objects and keep children's transformation"
 
     bl_idname = "object.delete_keep_children_transformation"
     bl_label = "Delete and Keep Children's Transformation"
@@ -152,7 +152,7 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
 
 class DeleteHierarchy(bpy.types.Operator):
 
-    "Delete the selected objects including their children"
+    "Delete selected objects including their children"
 
     bl_idname = "object.delete_hierarchy"
     bl_label = "Delete Hierarchy"
