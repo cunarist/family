@@ -113,7 +113,7 @@ class DeleteSimple(bpy.types.Operator):
 
     "Delete the selected objects"
 
-    bl_idname = "object.delete_selected"
+    bl_idname = "object.delete_simple"
     bl_label = "Delete"
     bl_options = {"REGISTER", "UNDO"}
 
