@@ -3,7 +3,7 @@ import bpy  # type:ignore
 
 class DuplicateMove(bpy.types.Operator):
 
-    "Duplicate the selected objects and move them"
+    "Duplicate selected objects and move them"
 
     bl_idname = "object.duplicate_move"
     bl_label = "Duplicate"
@@ -47,7 +47,7 @@ class DuplicateMove(bpy.types.Operator):
 
 class DuplicateMoveLinked(bpy.types.Operator):
 
-    "Duplicate the selected objects, but not their object data, and move them"
+    "Duplicate selected objects, but not their object data, and move them"
 
     bl_idname = "object.duplicate_move_linked"
     bl_label = "Duplicate Linked"
@@ -123,7 +123,7 @@ class Delete(bpy.types.Operator):
 
 class DeleteKeepChildrenTransformation(bpy.types.Operator):
 
-    "Delete selected objects and keep children's transformation"
+    "Delete selected objects and keep their children's transformation"
 
     bl_idname = "object.delete_keep_children_transformation"
     bl_label = "Delete and Keep Children's Transformation"
@@ -230,7 +230,7 @@ class SelectHierarchy(bpy.types.Operator):
 
 class SelectAllHierarchy(bpy.types.Operator):
 
-    "Select children of the selected objects"
+    "Add all children of selected objects to selection"
 
     bl_idname = "object.select_all_hierarchy"
     bl_label = "Select Hierarchy"
