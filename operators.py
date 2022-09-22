@@ -1,5 +1,7 @@
 import bpy  # type:ignore
 
+from .functions import set_root_object_active, deselect_except_root_objects
+
 
 class DuplicateMove(bpy.types.Operator):
 
@@ -30,18 +32,8 @@ class DuplicateMove(bpy.types.Operator):
 
         selected_objects = context.selected_objects
         active_object = context.view_layer.objects.active
-        is_inside = active_object in selected_objects
-        if active_object is None:
-            is_parent_inside = False
-        else:
-            is_parent_inside = active_object.parent in selected_objects
-        if not is_inside or is_parent_inside:
-            for selected_object in selected_objects:
-                if selected_object.parent not in selected_objects:
-                    context.view_layer.objects.active = selected_object
-        for selected_object in selected_objects:
-            if selected_object.parent in selected_objects:
-                selected_object.select_set(False)
+        set_root_object_active(context, selected_objects, active_object)
+        deselect_except_root_objects(selected_objects)
 
         return {"FINISHED"}
 
@@ -82,18 +74,8 @@ class DuplicateMoveLinked(bpy.types.Operator):
 
         selected_objects = context.selected_objects
         active_object = context.view_layer.objects.active
-        is_inside = active_object in selected_objects
-        if active_object is None:
-            is_parent_inside = False
-        else:
-            is_parent_inside = active_object.parent in selected_objects
-        if not is_inside or is_parent_inside:
-            for selected_object in selected_objects:
-                if selected_object.parent not in selected_objects:
-                    context.view_layer.objects.active = selected_object
-        for selected_object in selected_objects:
-            if selected_object.parent in selected_objects:
-                selected_object.select_set(False)
+        set_root_object_active(context, selected_objects, active_object)
+        deselect_except_root_objects(selected_objects)
 
         return {"FINISHED"}
 
@@ -243,15 +225,7 @@ class SelectHierarchy(bpy.types.Operator):
 
         selected_objects = context.selected_objects
         active_object = context.view_layer.objects.active
-        is_inside = active_object in selected_objects
-        if active_object is None:
-            is_parent_inside = False
-        else:
-            is_parent_inside = active_object.parent in selected_objects
-        if not is_inside or is_parent_inside:
-            for selected_object in selected_objects:
-                if selected_object.parent not in selected_objects:
-                    context.view_layer.objects.active = selected_object
+        set_root_object_active(context, selected_objects, active_object)
 
         return {"FINISHED"}
 
@@ -280,14 +254,6 @@ class SelectAllHierarchy(bpy.types.Operator):
 
         selected_objects = context.selected_objects
         active_object = context.view_layer.objects.active
-        is_inside = active_object in selected_objects
-        if active_object is None:
-            is_parent_inside = False
-        else:
-            is_parent_inside = active_object.parent in selected_objects
-        if not is_inside or is_parent_inside:
-            for selected_object in selected_objects:
-                if selected_object.parent not in selected_objects:
-                    context.view_layer.objects.active = selected_object
+        set_root_object_active(context, selected_objects, active_object)
 
         return {"FINISHED"}
