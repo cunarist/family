@@ -35,6 +35,13 @@ def deselect_except_root_objects(context):
 
     selected_objects = context.selected_objects
 
+    objects_in_hierarchies = set()
+
     for selected_object in selected_objects:
-        if selected_object.parent in selected_objects:
+        all_children = selected_object.children_recursive
+        objects_in_hierarchies.add(selected_object)
+        objects_in_hierarchies.update(all_children)
+
+    for selected_object in selected_objects:
+        if selected_object.parent in objects_in_hierarchies:
             selected_object.select_set(False)
