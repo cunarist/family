@@ -30,10 +30,8 @@ class DuplicateMove(bpy.types.Operator):
 
         bpy.ops.object.duplicate(linked=False)
 
-        selected_objects = context.selected_objects
-        active_object = context.view_layer.objects.active
-        set_root_object_active(context, selected_objects, active_object)
-        deselect_except_root_objects(selected_objects)
+        set_root_object_active(context)
+        deselect_except_root_objects(context)
 
         return {"FINISHED"}
 
@@ -72,10 +70,8 @@ class DuplicateMoveLinked(bpy.types.Operator):
 
         bpy.ops.object.duplicate(linked=True)
 
-        selected_objects = context.selected_objects
-        active_object = context.view_layer.objects.active
-        set_root_object_active(context, selected_objects, active_object)
-        deselect_except_root_objects(selected_objects)
+        set_root_object_active(context)
+        deselect_except_root_objects(context)
 
         return {"FINISHED"}
 
@@ -223,9 +219,7 @@ class SelectHierarchy(bpy.types.Operator):
         for target in targets:
             target.select_set(True)
 
-        selected_objects = context.selected_objects
-        active_object = context.view_layer.objects.active
-        set_root_object_active(context, selected_objects, active_object)
+        set_root_object_active(context)
 
         return {"FINISHED"}
 
@@ -252,8 +246,6 @@ class SelectAllHierarchy(bpy.types.Operator):
         for target in targets:
             target.select_set(True)
 
-        selected_objects = context.selected_objects
-        active_object = context.view_layer.objects.active
-        set_root_object_active(context, selected_objects, active_object)
+        set_root_object_active(context)
 
         return {"FINISHED"}

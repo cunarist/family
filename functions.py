@@ -1,4 +1,6 @@
-def set_root_object_active(context, selected_objects, active_object):
+def set_root_object_active(context):
+    selected_objects = context.selected_objects
+    active_object = context.view_layer.objects.active
     is_inside = active_object in selected_objects
     if active_object is None:
         is_parent_inside = False
@@ -10,7 +12,8 @@ def set_root_object_active(context, selected_objects, active_object):
                 context.view_layer.objects.active = selected_object
 
 
-def deselect_except_root_objects(selected_objects):
+def deselect_except_root_objects(context):
+    selected_objects = context.selected_objects
     for selected_object in selected_objects:
         if selected_object.parent in selected_objects:
             selected_object.select_set(False)
