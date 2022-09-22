@@ -30,8 +30,8 @@ class DuplicateMove(bpy.types.Operator):
 
         bpy.ops.object.duplicate(linked=False)
 
-        set_root_object_active(context)
         deselect_except_root_objects(context)
+        set_root_object_active(context)
 
         return {"FINISHED"}
 
@@ -70,8 +70,8 @@ class DuplicateMoveLinked(bpy.types.Operator):
 
         bpy.ops.object.duplicate(linked=True)
 
-        set_root_object_active(context)
         deselect_except_root_objects(context)
+        set_root_object_active(context)
 
         return {"FINISHED"}
 
