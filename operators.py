@@ -30,12 +30,10 @@ class DuplicateMove(bpy.types.Operator):
 
         selected_objects = context.selected_objects
         for selected_object in selected_objects:
-            if selected_object.parent in selected_objects:
+            if selected_object.parent not in selected_objects:
+                context.view_layer.objects.active = selected_object
+            else:
                 selected_object.select_set(False)
-
-        selected_objects = context.selected_objects
-        if context.view_layer.objects.active not in selected_objects:
-            context.view_layer.objects.active = selected_objects[0]
 
         return {"FINISHED"}
 
@@ -76,12 +74,10 @@ class DuplicateMoveLinked(bpy.types.Operator):
 
         selected_objects = context.selected_objects
         for selected_object in selected_objects:
-            if selected_object.parent in selected_objects:
+            if selected_object.parent not in selected_objects:
+                context.view_layer.objects.active = selected_object
+            else:
                 selected_object.select_set(False)
-
-        selected_objects = context.selected_objects
-        if context.view_layer.objects.active not in selected_objects:
-            context.view_layer.objects.active = selected_objects[0]
 
         return {"FINISHED"}
 
