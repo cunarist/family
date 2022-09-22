@@ -137,6 +137,8 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
         for target in targets:
             target.select_set(True)
         bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
+        for target in targets:
+            target.select_set(False)
 
         for selected_object in selected_objects:
             bpy.data.objects.remove(selected_object, do_unlink=True)
