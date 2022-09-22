@@ -228,11 +228,11 @@ class SelectHierarchy(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class SelectHierarchySimple(bpy.types.Operator):
+class SelectAllHierarchy(bpy.types.Operator):
 
     "Select children of the selected objects"
 
-    bl_idname = "object.select_hierarchy_simple"
+    bl_idname = "object.select_all_hierarchy"
     bl_label = "Select Hierarchy"
     bl_options = {"REGISTER", "UNDO"}
 
