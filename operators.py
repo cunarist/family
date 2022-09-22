@@ -211,12 +211,17 @@ class SelectHierarchy(bpy.types.Operator):
         if self.direction == "CHILD":
             for selected_object in selected_objects:
                 children = selected_object.children
-                targets.update(children)
+                if len(children) == 0:
+                    targets.add(selected_object)
+                else:
+                    targets.update(children)
         elif self.direction == "PARENT":
             for selected_object in selected_objects:
-                focus = selected_object.parent
-                if focus is not None:
-                    targets.add(focus)
+                parent = selected_object.parent
+                if parent is None:
+                    targets.add(selected_object)
+                else:
+                    targets.add(parent)
         for target in targets:
             target.select_set(True)
 
