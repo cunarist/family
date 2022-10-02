@@ -260,11 +260,23 @@ class RelateObjects(bpy.types.Operator):
 
         create_relationship = False
         for selected_object in selected_objects:
-            if selected_object != active_object:
+            if selected_object is not active_object:
                 create_relationship = True
                 break
 
         if create_relationship:
+            should_clear_parent_on_active = False
+            for selected_object in selected_objects:
+                if active_object in selected_object.children_recursive:
+                    should_clear_parent_on_active = True
+                    break
+            if should_clear_parent_on_active:
+                for selected_object in selected_objects:
+                    selected_object.select_set(False)
+                active_object.select_set(True)
+                bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
+                for selected_object in selected_objects:
+                    selected_object.select_set(True)
             bpy.ops.object.parent_set(keep_transform=True)
             for selected_object in selected_objects:
                 selected_object.select_set(False)
