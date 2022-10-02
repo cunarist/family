@@ -16,7 +16,7 @@ from .property_groups import FamilySettings
 bl_info = {
     "name": "Family",
     "author": "Cunarist",
-    "version": (2, 1),
+    "version": (3, 0),
     "blender": (2, 80, 0),
     "description": "An addon for Blender with duplicate and delete operations including children",
     "category": "Object",
