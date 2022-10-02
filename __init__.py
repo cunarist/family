@@ -8,6 +8,7 @@ from .operators import (
     DeleteHierarchy,
     SelectRelated,
     SelectHierarchy,
+    RelateObjects,
 )
 from .menus import DeleteMenu
 from .property_groups import FamilySettings
@@ -48,6 +49,7 @@ def register():
     bpy.utils.register_class(DeleteHierarchy)
     bpy.utils.register_class(SelectRelated)
     bpy.utils.register_class(SelectHierarchy)
+    bpy.utils.register_class(RelateObjects)
 
     bpy.utils.register_class(DeleteMenu)
 
@@ -107,6 +109,17 @@ def register():
     )
     added_keymaps.append((keymap, keymap_item))
 
+    keymap = addon_keymaps.new(
+        name="Object Mode",
+        space_type="EMPTY",
+    )
+    keymap_item = keymap.keymap_items.new(
+        RelateObjects.bl_idname,
+        value="PRESS",
+        type="P",
+    )
+    added_keymaps.append((keymap, keymap_item))
+
 
 def unregister():
 
@@ -117,6 +130,7 @@ def unregister():
     bpy.utils.unregister_class(DeleteHierarchy)
     bpy.utils.unregister_class(SelectRelated)
     bpy.utils.unregister_class(SelectHierarchy)
+    bpy.utils.unregister_class(RelateObjects)
 
     bpy.utils.unregister_class(DeleteMenu)
 

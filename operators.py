@@ -235,3 +235,45 @@ class SelectHierarchy(bpy.types.Operator):
         set_root_object_active(context)
 
         return {"FINISHED"}
+
+
+class RelateObjects(bpy.types.Operator):
+
+    (
+        "Make parent-child relationship keeping children's transform"
+        + "if objects other than the active one are selected"
+        + ", otherwise remove parent-child relationship"
+        + "keeping children's transform"
+    )
+
+    bl_idname = "object.relate_objects"
+    bl_label = "Relate Objects"
+    bl_options = {"REGISTER", "UNDO_GROUPED"}
+
+    def execute(self, context):
+
+        selected_objects = context.selected_objects
+        active_object = context.view_layer.objects.active
+
+        if active_object is None:
+            return {"PASS_THROUGH"}
+
+        create_relationship = False
+        for selected_object in selected_objects:
+            if selected_object != active_object:
+                create_relationship = True
+                break
+
+        if create_relationship:
+            bpy.ops.object.parent_set(keep_transform=True)
+            for selected_object in selected_objects:
+                selected_object.select_set(False)
+            active_object.select_set(True)
+        else:
+            active_object.select_set(False)
+            children = active_object.children
+            for child in children:
+                child.select_set(True)
+            bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
+
+        return {"FINISHED"}
