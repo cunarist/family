@@ -1,2 +1,3 @@
 # About
-An addon for Blender with duplicate and delete operations including children
+
+An addon for Blender with select, duplicate and delete operations including children
