@@ -1,17 +1,15 @@
 import bpy  # type:ignore
 
 from .operators import (
-    DuplicateMove,
-    DuplicateMoveLinked,
-    Delete,
+    DuplicateMoveHierarchy,
+    DuplicateMoveHierarchyLinked,
+    ShowDeleteMenu,
     DeleteKeepChildrenTransformation,
     DeleteHierarchy,
+    SelectRelated,
     SelectHierarchy,
-    SelectAllHierarchy,
 )
-
 from .menus import DeleteMenu
-
 from .property_groups import FamilySettings
 
 bl_info = {
@@ -24,10 +22,16 @@ bl_info = {
     "doc_url": "https://cunarist.com/family",
 }
 
+added_keymaps = []
+
 
 def draw_in_3d_view_object_menu(self, context):
     self.layout.separator()
-    self.layout.operator(SelectAllHierarchy.bl_idname)
+    self.layout.operator(SelectHierarchy.bl_idname)
+    self.layout.operator(DuplicateMoveHierarchy.bl_idname)
+    self.layout.operator(DuplicateMoveHierarchyLinked.bl_idname)
+    self.layout.operator(DeleteKeepChildrenTransformation.bl_idname)
+    self.layout.operator(DeleteHierarchy.bl_idname)
 
 
 def draw_in_topbar_edit_menu(self, context):
@@ -36,13 +40,14 @@ def draw_in_topbar_edit_menu(self, context):
 
 
 def register():
-    bpy.utils.register_class(DuplicateMove)
-    bpy.utils.register_class(DuplicateMoveLinked)
-    bpy.utils.register_class(Delete)
+
+    bpy.utils.register_class(DuplicateMoveHierarchy)
+    bpy.utils.register_class(DuplicateMoveHierarchyLinked)
+    bpy.utils.register_class(ShowDeleteMenu)
     bpy.utils.register_class(DeleteKeepChildrenTransformation)
     bpy.utils.register_class(DeleteHierarchy)
+    bpy.utils.register_class(SelectRelated)
     bpy.utils.register_class(SelectHierarchy)
-    bpy.utils.register_class(SelectAllHierarchy)
 
     bpy.utils.register_class(DeleteMenu)
 
@@ -54,15 +59,64 @@ def register():
 
     bpy.types.Scene.family_settings = bpy.props.PointerProperty(type=FamilySettings)
 
+    addon_keymaps = bpy.context.window_manager.keyconfigs.addon.keymaps
+
+    keymap = addon_keymaps.new(
+        name="Object Mode",
+        space_type="EMPTY",
+    )
+    keymap_item = keymap.keymap_items.new(
+        ShowDeleteMenu.bl_idname,
+        value="PRESS",
+        type="X",
+    )
+    added_keymaps.append((keymap, keymap_item))
+
+    keymap = addon_keymaps.new(
+        name="Object Mode",
+        space_type="EMPTY",
+    )
+    keymap_item = keymap.keymap_items.new(
+        DuplicateMoveHierarchy.bl_idname,
+        value="PRESS",
+        type="D",
+        shift=True,
+    )
+    added_keymaps.append((keymap, keymap_item))
+
+    keymap = addon_keymaps.new(
+        name="Object Mode",
+        space_type="EMPTY",
+    )
+    keymap_item = keymap.keymap_items.new(
+        DuplicateMoveHierarchyLinked.bl_idname,
+        value="PRESS",
+        type="D",
+        alt=True,
+    )
+    added_keymaps.append((keymap, keymap_item))
+
+    keymap = addon_keymaps.new(
+        name="Object Mode",
+        space_type="EMPTY",
+    )
+    keymap_item = keymap.keymap_items.new(
+        SelectHierarchy.bl_idname,
+        value="PRESS",
+        type="F",
+    )
+    added_keymaps.append((keymap, keymap_item))
+
 
 def unregister():
-    bpy.utils.unregister_class(DuplicateMove)
-    bpy.utils.unregister_class(DuplicateMoveLinked)
-    bpy.utils.unregister_class(Delete)
+
+    bpy.utils.unregister_class(DuplicateMoveHierarchy)
+    bpy.utils.unregister_class(DuplicateMoveHierarchyLinked)
+    bpy.utils.unregister_class(ShowDeleteMenu)
     bpy.utils.unregister_class(DeleteKeepChildrenTransformation)
     bpy.utils.unregister_class(DeleteHierarchy)
+    bpy.utils.unregister_class(SelectRelated)
     bpy.utils.unregister_class(SelectHierarchy)
-    bpy.utils.unregister_class(SelectAllHierarchy)
 
     bpy.utils.unregister_class(DeleteMenu)
 
@@ -74,3 +128,7 @@ def unregister():
 
     if hasattr(bpy.types.Scene, "family_settings"):
         del bpy.types.Scene.family_settings
+
+    for keymap, keymap_item in added_keymaps:
+        keymap.keymap_items.remove(keymap_item)
+    added_keymaps.clear()

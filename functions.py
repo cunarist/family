@@ -4,7 +4,7 @@ def set_root_object_active(context):
     active_object = context.view_layer.objects.active
 
     if len(selected_objects) == 0:
-        raise IndexError("there should be at least one selected object")
+        return
 
     is_inside = active_object in selected_objects
     if active_object is None:
