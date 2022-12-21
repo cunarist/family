@@ -4,26 +4,22 @@ from .property_groups import FamilySettings
 
 from .functions import (
     set_root_object_active,  # type: ignore
-    deselect_except_root_objects,  # type: ignore
 )
 
 
 class DuplicateMoveHierarchy(bpy.types.Operator):
 
-    "Duplicate selected objects with their all recursive children and move them"
+    "Duplicate selected objects with all their recursive children and move them"
 
     bl_idname = "object.duplicate_move_hierarchy"
     bl_label = "Duplicate Hierarchy"
-    bl_options = {"REGISTER", "UNDO"}
+    bl_options = {"MACRO"}
 
     def execute(self, context: bpy.types.Context):
 
         family_settings: FamilySettings = getattr(context.scene, "family_settings")
         take_hierarchy = family_settings.duplicate_hierarchy  # type: ignore
         selected_objects = context.selected_objects
-
-        if len(selected_objects) == 0:
-            return {"PASS_THROUGH"}
 
         if take_hierarchy:
             targets: set[bpy.types.Object] = set()
@@ -32,37 +28,45 @@ class DuplicateMoveHierarchy(bpy.types.Operator):
             for target in targets:
                 target.select_set(True)
 
-        bpy.ops.object.duplicate(linked=False)  # type: ignore
+        bpy.ops.object.duplicate_move()  # type: ignore
 
         set_root_object_active(context)
-        deselect_except_root_objects(context)
 
         return {"FINISHED"}
 
     def invoke(self, context: bpy.types.Context, event: bpy.types.Event):
 
-        returned = self.execute(context)
-        bpy.ops.transform.translate("INVOKE_DEFAULT")  # type: ignore
+        family_settings: FamilySettings = getattr(context.scene, "family_settings")
+        take_hierarchy = family_settings.duplicate_hierarchy  # type: ignore
+        selected_objects = context.selected_objects
 
-        return returned
+        if take_hierarchy:
+            targets: set[bpy.types.Object] = set()
+            for selected_object in selected_objects:
+                targets.update(selected_object.children_recursive)  # type: ignore
+            for target in targets:
+                target.select_set(True)
+
+        bpy.ops.object.duplicate_move("INVOKE_DEFAULT")  # type: ignore
+
+        set_root_object_active(context)
+
+        return {"FINISHED"}
 
 
 class DuplicateMoveHierarchyLinked(bpy.types.Operator):
 
-    "Duplicate selected objects with their all recursive children, but not their object data, and move them"
+    "Duplicate selected objects with all their recursive children, but not their object data, and move them"
 
     bl_idname = "object.duplicate_move_hierarchy_linked"
     bl_label = "Duplicate Hierarchy Linked"
-    bl_options = {"REGISTER", "UNDO"}
+    bl_options = {"MACRO"}
 
     def execute(self, context: bpy.types.Context):
 
         family_settings: FamilySettings = getattr(context.scene, "family_settings")
         take_hierarchy = family_settings.duplicate_hierarchy  # type: ignore
         selected_objects = context.selected_objects
-
-        if len(selected_objects) == 0:
-            return {"PASS_THROUGH"}
 
         if take_hierarchy:
             targets: set[bpy.types.Object] = set()
@@ -71,19 +75,30 @@ class DuplicateMoveHierarchyLinked(bpy.types.Operator):
             for target in targets:
                 target.select_set(True)
 
-        bpy.ops.object.duplicate(linked=True)  # type: ignore
+        bpy.ops.object.duplicate_move_linked()  # type: ignore
 
         set_root_object_active(context)
-        deselect_except_root_objects(context)
 
         return {"FINISHED"}
 
     def invoke(self, context: bpy.types.Context, event: bpy.types.Event):
 
-        returned = self.execute(context)
-        bpy.ops.transform.translate("INVOKE_DEFAULT")  # type: ignore
+        family_settings: FamilySettings = getattr(context.scene, "family_settings")
+        take_hierarchy = family_settings.duplicate_hierarchy  # type: ignore
+        selected_objects = context.selected_objects
 
-        return returned
+        if take_hierarchy:
+            targets: set[bpy.types.Object] = set()
+            for selected_object in selected_objects:
+                targets.update(selected_object.children_recursive)  # type: ignore
+            for target in targets:
+                target.select_set(True)
+
+        bpy.ops.object.duplicate_move_linked("INVOKE_DEFAULT")  # type: ignore
+
+        set_root_object_active(context)
+
+        return {"FINISHED"}
 
 
 class ShowDeleteMenu(bpy.types.Operator):
@@ -134,7 +149,7 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
 
 class DeleteHierarchy(bpy.types.Operator):
 
-    "Delete selected objects including their all recursive children"
+    "Delete selected objects including all their recursive children"
 
     bl_idname = "object.delete_hierarchy"
     bl_label = "Delete Hierarchy"

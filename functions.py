@@ -32,18 +32,3 @@ def set_root_object_active(context: bpy.types.Context):
             context.view_layer.objects.active = root_objects.pop()  # type: ignore
         else:
             context.view_layer.objects.active = ancestor_root_object  # type: ignore
-
-
-def deselect_except_root_objects(context: bpy.types.Context):
-
-    selected_objects = context.selected_objects
-
-    objects_in_hierarchies: set[bpy.types.Object] = set()
-
-    for selected_object in selected_objects:
-        objects_in_hierarchies.add(selected_object)
-        objects_in_hierarchies.update(selected_object.children_recursive)  # type: ignore
-
-    for selected_object in selected_objects:
-        if selected_object.parent in objects_in_hierarchies:
-            selected_object.select_set(False)
