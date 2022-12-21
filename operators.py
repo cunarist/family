@@ -1,4 +1,4 @@
-import bpy  # type:ignore
+import bpy
 
 from .functions import set_root_object_active, deselect_except_root_objects
 
