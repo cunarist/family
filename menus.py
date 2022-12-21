@@ -1,11 +1,11 @@
-import bpy  # type:ignore
+import bpy
 
 
 class DeleteMenu(bpy.types.Menu):
     bl_idname = "OBJECT_MT_delete_menu"
     bl_label = "Delete"
 
-    def draw(self, context):
+    def draw(self, context: bpy.types.Context):
         layout = self.layout
 
         layout.operator(

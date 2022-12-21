@@ -1,6 +1,11 @@
+from typing import Any
 import bpy
+from .property_groups import FamilySettings
 
-from .functions import set_root_object_active, deselect_except_root_objects
+from .functions import (
+    set_root_object_active,  # type: ignore
+    deselect_except_root_objects,  # type: ignore
+)
 
 
 class DuplicateMoveHierarchy(bpy.types.Operator):
@@ -11,33 +16,33 @@ class DuplicateMoveHierarchy(bpy.types.Operator):
     bl_label = "Duplicate Hierarchy"
     bl_options = {"REGISTER", "UNDO"}
 
-    def execute(self, context):
+    def execute(self, context: bpy.types.Context):
 
-        take_hierarchy = context.scene.family_settings.duplicate_hierarchy
+        family_settings: FamilySettings = getattr(context.scene, "family_settings")
+        take_hierarchy = family_settings.duplicate_hierarchy  # type: ignore
         selected_objects = context.selected_objects
 
         if len(selected_objects) == 0:
             return {"PASS_THROUGH"}
 
         if take_hierarchy:
-            targets = set()
+            targets: set[bpy.types.Object] = set()
             for selected_object in selected_objects:
-                all_children = selected_object.children_recursive
-                targets.update(all_children)
+                targets.update(selected_object.children_recursive)  # type: ignore
             for target in targets:
                 target.select_set(True)
 
-        bpy.ops.object.duplicate(linked=False)
+        bpy.ops.object.duplicate(linked=False)  # type: ignore
 
         set_root_object_active(context)
         deselect_except_root_objects(context)
 
         return {"FINISHED"}
 
-    def invoke(self, context, event):
+    def invoke(self, context: bpy.types.Context, event: bpy.types.Event):
 
         returned = self.execute(context)
-        bpy.ops.transform.translate("INVOKE_DEFAULT")
+        bpy.ops.transform.translate("INVOKE_DEFAULT")  # type: ignore
 
         return returned
 
@@ -50,33 +55,33 @@ class DuplicateMoveHierarchyLinked(bpy.types.Operator):
     bl_label = "Duplicate Hierarchy Linked"
     bl_options = {"REGISTER", "UNDO"}
 
-    def execute(self, context):
+    def execute(self, context: bpy.types.Context):
 
-        take_hierarchy = context.scene.family_settings.duplicate_hierarchy
+        family_settings: FamilySettings = getattr(context.scene, "family_settings")
+        take_hierarchy = family_settings.duplicate_hierarchy  # type: ignore
         selected_objects = context.selected_objects
 
         if len(selected_objects) == 0:
             return {"PASS_THROUGH"}
 
         if take_hierarchy:
-            targets = set()
+            targets: set[bpy.types.Object] = set()
             for selected_object in selected_objects:
-                all_children = selected_object.children_recursive
-                targets.update(all_children)
+                targets.update(selected_object.children_recursive)  # type: ignore
             for target in targets:
                 target.select_set(True)
 
-        bpy.ops.object.duplicate(linked=True)
+        bpy.ops.object.duplicate(linked=True)  # type: ignore
 
         set_root_object_active(context)
         deselect_except_root_objects(context)
 
         return {"FINISHED"}
 
-    def invoke(self, context, event):
+    def invoke(self, context: bpy.types.Context, event: bpy.types.Event):
 
         returned = self.execute(context)
-        bpy.ops.transform.translate("INVOKE_DEFAULT")
+        bpy.ops.transform.translate("INVOKE_DEFAULT")  # type: ignore
 
         return returned
 
@@ -89,9 +94,9 @@ class ShowDeleteMenu(bpy.types.Operator):
     bl_label = "Show Delete Menu"
     bl_options = {"MACRO"}
 
-    def invoke(self, context, event):
+    def invoke(self, context: bpy.types.Context, event: bpy.types.Event):
 
-        bpy.ops.wm.call_menu(name="OBJECT_MT_delete_menu")
+        bpy.ops.wm.call_menu(name="OBJECT_MT_delete_menu")  # type: ignore
         return {"FINISHED"}
 
 
@@ -103,27 +108,26 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
     bl_label = "Delete and Keep Children's Transformation"
     bl_options = {"REGISTER", "UNDO"}
 
-    def execute(self, context):
+    def execute(self, context: bpy.types.Context):
 
         selected_objects = context.selected_objects
 
         if len(selected_objects) == 0:
             return {"PASS_THROUGH"}
 
-        targets = set()
+        targets: set[bpy.types.Object] = set()
         for selected_object in selected_objects:
-            children = selected_object.children
-            targets.update(children)
+            targets.update(selected_object.children)  # type:ignore
         for target in targets:
             target.select_set(True)
-        bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
+        bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")  # type:ignore
         for target in targets:
             target.select_set(False)
 
         for selected_object in selected_objects:
             selected_object.select_set(True)
 
-        bpy.ops.object.delete()
+        bpy.ops.object.delete()  # type:ignore
 
         return {"FINISHED"}
 
@@ -136,21 +140,20 @@ class DeleteHierarchy(bpy.types.Operator):
     bl_label = "Delete Hierarchy"
     bl_options = {"REGISTER", "UNDO"}
 
-    def execute(self, context):
+    def execute(self, context: bpy.types.Context):
 
         selected_objects = context.selected_objects
 
         if len(selected_objects) == 0:
             return {"PASS_THROUGH"}
 
-        targets = set(selected_objects)
+        targets: set[bpy.types.Object] = set(selected_objects)
         for selected_object in selected_objects:
-            all_children = selected_object.children_recursive
-            targets.update(all_children)
+            targets.update(selected_object.children_recursive)  # type:ignore
         for target in targets:
             target.select_set(True)
 
-        bpy.ops.object.delete()
+        bpy.ops.object.delete()  # type:ignore
 
         return {"FINISHED"}
 
@@ -163,39 +166,40 @@ class SelectRelated(bpy.types.Operator):
     bl_label = "Select Related"
     bl_options = {"REGISTER", "UNDO_GROUPED"}
 
-    direction: bpy.props.EnumProperty(
+    direction_items: list[Any] = [
+        ("CHILD", "Select Child", "", 1),
+        ("PARENT", "Select Parent", "", 2),
+    ]
+    direction: bpy.props.EnumProperty(  # type:ignore
         name="Direction",
-        items=[
-            ("CHILD", "Select Child", "", 1),
-            ("PARENT", "Select Parent", "", 2),
-        ],
+        items=direction_items,  # type:ignore
         default="CHILD",
     )
-    extend: bpy.props.BoolProperty(
+    extend: bpy.props.BoolProperty(  # type:ignore
         name="Extend",
         default=True,
     )
 
-    def execute(self, context):
+    def execute(self, context: bpy.types.Context):
 
         selected_objects = context.selected_objects
 
         if len(selected_objects) == 0:
             return {"PASS_THROUGH"}
 
-        if not self.extend:
+        if not self.extend:  # type: ignore
             for selected_object in selected_objects:
                 selected_object.select_set(False)
 
-        targets = set()
-        if self.direction == "CHILD":
+        targets: set[bpy.types.Object] = set()
+        if self.direction == "CHILD":  # type: ignore
             for selected_object in selected_objects:
-                children = selected_object.children
+                children: list[bpy.types.Object] = selected_object.children  # type: ignore
                 if len(children) == 0:
                     targets.add(selected_object)
                 else:
                     targets.update(children)
-        elif self.direction == "PARENT":
+        elif self.direction == "PARENT":  # type: ignore
             for selected_object in selected_objects:
                 parent = selected_object.parent
                 if parent is None:
@@ -218,17 +222,16 @@ class SelectHierarchy(bpy.types.Operator):
     bl_label = "Select Hierarchy"
     bl_options = {"REGISTER", "UNDO"}
 
-    def execute(self, context):
+    def execute(self, context: bpy.types.Context):
 
         selected_objects = context.selected_objects
 
         if len(selected_objects) == 0:
             return {"PASS_THROUGH"}
 
-        targets = set()
+        targets: set[bpy.types.Object] = set()
         for selected_object in selected_objects:
-            all_children = selected_object.children_recursive
-            targets.update(all_children)
+            targets.update(selected_object.children_recursive)  # type: ignore
         for target in targets:
             target.select_set(True)
 
@@ -239,21 +242,16 @@ class SelectHierarchy(bpy.types.Operator):
 
 class RelateObjects(bpy.types.Operator):
 
-    (
-        "Make parent-child relationship keeping children's transform"
-        + "if objects other than the active one are selected"
-        + ", otherwise remove parent-child relationship"
-        + "keeping children's transform"
-    )
+    "Make parent-child relationship keeping children's transform if objects other than the active one are selected, otherwise remove parent-child relationship keeping children's transform"
 
     bl_idname = "object.relate_objects"
     bl_label = "Relate Objects"
     bl_options = {"REGISTER", "UNDO_GROUPED"}
 
-    def execute(self, context):
+    def execute(self, context: bpy.types.Context):
 
         selected_objects = context.selected_objects
-        active_object = context.view_layer.objects.active
+        active_object = context.view_layer.objects.active  # type: ignore
 
         if active_object is None:
             return {"PASS_THROUGH"}
@@ -267,25 +265,25 @@ class RelateObjects(bpy.types.Operator):
         if create_relationship:
             should_clear_parent_on_active = False
             for selected_object in selected_objects:
-                if active_object in selected_object.children_recursive:
+                if active_object in selected_object.children_recursive:  # type: ignore
                     should_clear_parent_on_active = True
                     break
             if should_clear_parent_on_active:
                 for selected_object in selected_objects:
                     selected_object.select_set(False)
-                active_object.select_set(True)
-                bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
+                active_object.select_set(True)  # type: ignore
+                bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")  # type: ignore
                 for selected_object in selected_objects:
                     selected_object.select_set(True)
-            bpy.ops.object.parent_set(keep_transform=True)
+            bpy.ops.object.parent_set(keep_transform=True)  # type: ignore
             for selected_object in selected_objects:
                 selected_object.select_set(False)
-            active_object.select_set(True)
+            active_object.select_set(True)  # type: ignore
         else:
-            active_object.select_set(False)
-            children = active_object.children
+            active_object.select_set(False)  # type: ignore
+            children: list[bpy.types.Object] = active_object.children  # type: ignore
             for child in children:
                 child.select_set(True)
-            bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
+            bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")  # type: ignore
 
         return {"FINISHED"}
