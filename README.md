@@ -4,7 +4,7 @@ Type hints should be provided for the maintainability of the code. Turn on stric
 
 # Command Line Scripts
 
-Install packages written in `requirements.txt` from PYPI
+Install packages written in `requirements.txt` from Python Package Index
 
 ```
 pip install -r ./requirements.txt
