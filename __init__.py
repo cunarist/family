@@ -113,6 +113,7 @@ def register():
         SelectHierarchy.bl_idname,
         value="PRESS",
         type="F",
+        ctrl=True,
     )
     added_keymaps.append((keymap, keymap_item))  # type: ignore
 
