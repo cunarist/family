@@ -12,6 +12,8 @@ from .operators import (
 from .menus import DeleteMenu
 from .property_groups import FamilySettings
 
+__all__ = []
+
 bl_info = {
     "name": "Family",
     "author": "Cunarist",
@@ -41,7 +43,6 @@ def draw_in_topbar_edit_menu(self: bpy.types.Header, context: bpy.types.Context)
 
 
 def register():
-
     bpy.utils.register_class(DuplicateMoveHierarchy)  # type: ignore
     bpy.utils.register_class(DuplicateMoveHierarchyLinked)  # type: ignore
     bpy.utils.register_class(ShowDeleteMenu)  # type: ignore
@@ -130,7 +131,6 @@ def register():
 
 
 def unregister():
-
     bpy.utils.unregister_class(DuplicateMoveHierarchy)  # type: ignore
     bpy.utils.unregister_class(DuplicateMoveHierarchyLinked)  # type: ignore
     bpy.utils.unregister_class(ShowDeleteMenu)  # type: ignore
