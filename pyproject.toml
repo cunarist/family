@@ -1,9 +1,0 @@
-[project]
-name = "family"
-version = "3.3.0"
-requires-python = ">=3.10"
-dependencies = ["fake-bpy-module-latest>=20221221"]
-
-[tool.setuptools.packages.find]
-# Tell setuptools(which PIP relies on) to only include the `src` folder
-include = ["src"]

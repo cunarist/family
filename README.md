@@ -1,13 +1,11 @@
-# Command Line Scripts
-
-Install dependencies written in `pyproject.toml`
-
-```
-pip install .
-```
-
 # Rules
 
-It is important to provide type hints for all function parameters in order to ensure the maintainability of the code. Additionally, please write clear and readable docstrings wherever possible.
+Type hints should be provided for the maintainability of the code. Turn on strict type checking in whatever IDE you are using. If some third party packages doesn't support type checking very well, then you can write `# type: ignore` to suppress the warning.
 
-To distribute the package, simply zip the `addon` folder.
+# Command Line Scripts
+
+Install packages written in `requirements.txt` from Python Package Index
+
+```
+pip install -r ./requirements.txt
+```
