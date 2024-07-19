@@ -1,9 +1,17 @@
 # Command Line Scripts
 
+Prepare Poetry for dependency management
+
+```bash
+pip install pipx
+python -m pipx ensurepath
+pipx install poetry
+```
+
 Install dependencies written in `requirements.txt`
 
 ```
-pip install -r ./requirements.txt
+poetry install
 ```
 
 # Rules
