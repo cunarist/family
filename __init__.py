@@ -15,7 +15,7 @@ from .modules import (
 bl_info = {
     "name": "Family",
     "author": "Cunarist <cunarist@gmail.com>",
-    "version": (3, 3),
+    "version": (3, 3, 1),
     "blender": (3, 0, 0),
     "description": "An addon for Blender with select, duplicate and delete operations in hierarchy",
     "category": "Object",
