@@ -1,4 +1,3 @@
-from typing import Any
 import bpy
 from .property_groups import FamilySettings
 from .functions import (
@@ -21,7 +20,7 @@ class DuplicateMoveHierarchy(bpy.types.Operator):
         selected_objects = context.selected_objects
 
         if take_hierarchy:
-            targets: set[bpy.types.Object] = set()
+            targets = set[bpy.types.Object]()
             for selected_object in selected_objects:
                 targets.update(selected_object.children_recursive)
             for target in targets:
@@ -39,7 +38,7 @@ class DuplicateMoveHierarchy(bpy.types.Operator):
         selected_objects = context.selected_objects
 
         if take_hierarchy:
-            targets: set[bpy.types.Object] = set()
+            targets = set[bpy.types.Object]()
             for selected_object in selected_objects:
                 targets.update(selected_object.children_recursive)
             for target in targets:
@@ -68,7 +67,7 @@ class DuplicateMoveHierarchyLinked(bpy.types.Operator):
         selected_objects = context.selected_objects
 
         if take_hierarchy:
-            targets: set[bpy.types.Object] = set()
+            targets = set[bpy.types.Object]()
             for selected_object in selected_objects:
                 targets.update(selected_object.children_recursive)
             for target in targets:
@@ -86,7 +85,7 @@ class DuplicateMoveHierarchyLinked(bpy.types.Operator):
         selected_objects = context.selected_objects
 
         if take_hierarchy:
-            targets: set[bpy.types.Object] = set()
+            targets = set[bpy.types.Object]()
             for selected_object in selected_objects:
                 targets.update(selected_object.children_recursive)
             for target in targets:
@@ -128,7 +127,7 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
         if len(selected_objects) == 0:
             return {"PASS_THROUGH"}
 
-        targets: set[bpy.types.Object] = set()
+        targets = set[bpy.types.Object]()
         for selected_object in selected_objects:
             targets.update(selected_object.children)  # type:ignore
         for target in targets:
@@ -180,7 +179,7 @@ class SelectRelated(bpy.types.Operator):
     bl_label = "Select Related"
     bl_options = {"REGISTER", "UNDO_GROUPED"}
 
-    direction_items: list[Any] = [
+    direction_items = [
         ("CHILD", "Select Child", "", 1),
         ("PARENT", "Select Parent", "", 2),
     ]
@@ -204,7 +203,7 @@ class SelectRelated(bpy.types.Operator):
             for selected_object in selected_objects:
                 selected_object.select_set(False)
 
-        targets: set[bpy.types.Object] = set()
+        targets = set[bpy.types.Object]()
         if self.direction == "CHILD":
             for selected_object in selected_objects:
                 children = list(selected_object.children)
@@ -242,7 +241,7 @@ class SelectHierarchy(bpy.types.Operator):
         if len(selected_objects) == 0:
             return {"PASS_THROUGH"}
 
-        targets: set[bpy.types.Object] = set()
+        targets = set[bpy.types.Object]()
         for selected_object in selected_objects:
             targets.update(selected_object.children_recursive)
         for target in targets:

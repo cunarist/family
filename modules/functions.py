@@ -15,7 +15,7 @@ def set_root_object_active(context: bpy.types.Context):
         is_parent_inside = active_object.parent in selected_objects
 
     if not is_inside or is_parent_inside:
-        root_objects: set[bpy.types.Object] = set()
+        root_objects = set[bpy.types.Object]()
         ancestor_root_object = None
 
         for selected_object in selected_objects:
