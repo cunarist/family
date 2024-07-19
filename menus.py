@@ -5,7 +5,7 @@ class DeleteMenu(bpy.types.Menu):
     bl_idname = "OBJECT_MT_delete_menu"
     bl_label = "Delete"
 
-    def draw(self, context: bpy.types.Context):
+    def draw(self, context: bpy.types.Context | None):
         layout = self.layout
 
         layout.operator(
