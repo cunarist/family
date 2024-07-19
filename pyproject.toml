@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "family"
-version = "3.4.0"
+version = "3.4.1"
 description = "Select, duplicate and delete objects in hierarchy in Blender"
 authors = ["Cunarist <cunarist@gmail.com>"]
 license = "GPL"
