@@ -17,7 +17,8 @@ bl_info = {
     "author": "Cunarist <cunarist@gmail.com>",
     "version": (3, 3, 1),
     "blender": (3, 0, 0),
-    "description": "An addon for Blender with select, duplicate and delete operations in hierarchy",
+    "description": "An addon for Blender with select,"
+    " duplicate and delete operations in hierarchy",
     "category": "Object",
     "doc_url": "https://cunarist.com/family",
 }
