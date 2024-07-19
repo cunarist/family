@@ -170,68 +170,12 @@ class DeleteHierarchy(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class SelectRelated(bpy.types.Operator):
-    """
-    Select objects up or down the hierarchy
-    """
-
-    bl_idname = "object.select_hierarchy"
-    bl_label = "Select Related"
-    bl_options = {"REGISTER", "UNDO_GROUPED"}
-
-    direction_items = [
-        ("CHILD", "Select Child", "", 1),
-        ("PARENT", "Select Parent", "", 2),
-    ]
-    direction: bpy.props.EnumProperty(
-        name="Direction",
-        items=direction_items,
-        default="CHILD",
-    )  # type:ignore
-    extend: bpy.props.BoolProperty(
-        name="Extend",
-        default=True,
-    )  # type:ignore
-
-    def execute(self, context: bpy.types.Context):
-        selected_objects = context.selected_objects
-
-        if len(selected_objects) == 0:
-            return {"PASS_THROUGH"}
-
-        if not self.extend:
-            for selected_object in selected_objects:
-                selected_object.select_set(False)
-
-        targets = set[bpy.types.Object]()
-        if self.direction == "CHILD":
-            for selected_object in selected_objects:
-                children = list(selected_object.children)
-                if len(children) == 0:
-                    targets.add(selected_object)
-                else:
-                    targets.update(children)
-        elif self.direction == "PARENT":
-            for selected_object in selected_objects:
-                parent = selected_object.parent
-                if parent is None:
-                    targets.add(selected_object)
-                else:
-                    targets.add(parent)
-        for target in targets:
-            target.select_set(True)
-
-        set_root_object_active(context)
-
-        return {"FINISHED"}
-
-
-class SelectHierarchy(bpy.types.Operator):
+class SelectAllHierarchy(bpy.types.Operator):
     """
     Add all recursive children of selected objects to selection
     """
 
-    bl_idname = "object.select_real_hierarchy"
+    bl_idname = "object.select_all_hierarchy"
     bl_label = "Select Hierarchy"
     bl_options = {"REGISTER", "UNDO"}
 

@@ -5,8 +5,7 @@ from .modules import (
     ShowDeleteMenu,
     DeleteKeepChildrenTransformation,
     DeleteHierarchy,
-    SelectRelated,
-    SelectHierarchy,
+    SelectAllHierarchy,
     DeleteMenu,
     FamilySettings,
 )
@@ -27,7 +26,7 @@ added_keymaps = []
 
 def draw_in_3d_view_object_menu(self: bpy.types.Menu, context: bpy.types.Context):
     self.layout.separator()
-    self.layout.operator(SelectHierarchy.bl_idname)
+    self.layout.operator(SelectAllHierarchy.bl_idname)
     self.layout.operator(DuplicateMoveHierarchy.bl_idname)
     self.layout.operator(DuplicateMoveHierarchyLinked.bl_idname)
     self.layout.operator(DeleteKeepChildrenTransformation.bl_idname)
@@ -46,8 +45,7 @@ def register():
     bpy.utils.register_class(ShowDeleteMenu)
     bpy.utils.register_class(DeleteKeepChildrenTransformation)
     bpy.utils.register_class(DeleteHierarchy)
-    bpy.utils.register_class(SelectRelated)
-    bpy.utils.register_class(SelectHierarchy)
+    bpy.utils.register_class(SelectAllHierarchy)
 
     bpy.utils.register_class(DeleteMenu)
 
@@ -108,7 +106,7 @@ def register():
         space_type="EMPTY",
     )
     keymap_item = keymap.keymap_items.new(
-        SelectHierarchy.bl_idname,
+        SelectAllHierarchy.bl_idname,
         value="PRESS",
         type="F",
         alt=True,
@@ -122,8 +120,7 @@ def unregister():
     bpy.utils.unregister_class(ShowDeleteMenu)
     bpy.utils.unregister_class(DeleteKeepChildrenTransformation)
     bpy.utils.unregister_class(DeleteHierarchy)
-    bpy.utils.unregister_class(SelectRelated)
-    bpy.utils.unregister_class(SelectHierarchy)
+    bpy.utils.unregister_class(SelectAllHierarchy)
 
     bpy.utils.unregister_class(DeleteMenu)
 

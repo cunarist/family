@@ -4,8 +4,7 @@ from .operators import (
     ShowDeleteMenu,
     DeleteKeepChildrenTransformation,
     DeleteHierarchy,
-    SelectRelated,
-    SelectHierarchy,
+    SelectAllHierarchy,
 )
 from .menus import DeleteMenu
 from .property_groups import FamilySettings
@@ -16,8 +15,7 @@ __all__ = [
     "ShowDeleteMenu",
     "DeleteKeepChildrenTransformation",
     "DeleteHierarchy",
-    "SelectRelated",
-    "SelectHierarchy",
+    "SelectAllHierarchy",
     "DeleteMenu",
     "FamilySettings",
     "DeleteMenu",
