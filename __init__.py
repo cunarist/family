@@ -21,7 +21,7 @@ bl_info = {
     "doc_url": "https://cunarist.com/family",
 }
 
-added_keymaps = []
+added_keymaps: list[tuple[bpy.types.KeyMap, bpy.types.KeyMapItem]] = []
 
 
 def draw_in_3d_view_object_menu(self: bpy.types.Menu, context: bpy.types.Context):
@@ -137,8 +137,6 @@ def unregister():
         family_settings = getattr(bpy.types.Scene, "family_settings")
         del family_settings
 
-    keymap: bpy.types.KeyMap
-    keymap_item: bpy.types.KeyMapItem
     for keymap, keymap_item in added_keymaps:
         keymap.keymap_items.remove(keymap_item)
     added_keymaps.clear()
