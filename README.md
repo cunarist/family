@@ -8,7 +8,7 @@ python -m pipx ensurepath
 pipx install poetry
 ```
 
-Install dependencies written in `requirements.txt`
+Install dependencies for development
 
 ```
 poetry install

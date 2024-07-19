@@ -1,5 +1,5 @@
 import bpy
-from .operators import (
+from .modules import (
     DuplicateMoveHierarchy,
     DuplicateMoveHierarchyLinked,
     ShowDeleteMenu,
@@ -8,13 +8,13 @@ from .operators import (
     SelectRelated,
     SelectHierarchy,
     RelateObjects,
+    DeleteMenu,
+    FamilySettings,
 )
-from .menus import DeleteMenu
-from .property_groups import FamilySettings
 
 bl_info = {
     "name": "Family",
-    "author": "Cunarist",
+    "author": "Cunarist <cunarist@gmail.com>",
     "version": (3, 3),
     "blender": (3, 0, 0),
     "description": "An addon for Blender with select, duplicate and delete operations in hierarchy",
@@ -41,7 +41,6 @@ def draw_in_topbar_edit_menu(self: bpy.types.Header, context: bpy.types.Context)
 
 
 def register():
-
     bpy.utils.register_class(DuplicateMoveHierarchy)  # type: ignore
     bpy.utils.register_class(DuplicateMoveHierarchyLinked)  # type: ignore
     bpy.utils.register_class(ShowDeleteMenu)  # type: ignore
@@ -130,7 +129,6 @@ def register():
 
 
 def unregister():
-
     bpy.utils.unregister_class(DuplicateMoveHierarchy)  # type: ignore
     bpy.utils.unregister_class(DuplicateMoveHierarchyLinked)  # type: ignore
     bpy.utils.unregister_class(ShowDeleteMenu)  # type: ignore
