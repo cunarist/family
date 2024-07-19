@@ -6,7 +6,6 @@ from .operators import (
     DeleteHierarchy,
     SelectRelated,
     SelectHierarchy,
-    RelateObjects,
 )
 from .menus import DeleteMenu
 from .property_groups import FamilySettings
@@ -19,7 +18,6 @@ __all__ = [
     "DeleteHierarchy",
     "SelectRelated",
     "SelectHierarchy",
-    "RelateObjects",
     "DeleteMenu",
     "FamilySettings",
     "DeleteMenu",
