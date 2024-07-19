@@ -1,7 +1,6 @@
 from typing import Any
 import bpy
 from .property_groups import FamilySettings
-
 from .functions import (
     set_root_object_active,
 )

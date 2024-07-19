@@ -13,3 +13,4 @@ python = "^3.12"
 [tool.poetry.dev-dependencies]
 fake-bpy-module-latest = "^20240718"
 pyright = "*"
+ruff = "*"
