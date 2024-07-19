@@ -2,9 +2,8 @@ import bpy
 
 
 class FamilySettings(bpy.types.PropertyGroup):
-
-    duplicate_hierarchy: bpy.props.BoolProperty(  # type: ignore
+    duplicate_hierarchy: bpy.props.BoolProperty(
         name="Duplicate Hierarchy",
         default=True,
         description="Make object duplication operators include children",
-    )
+    )  # type:ignore
