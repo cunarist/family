@@ -10,7 +10,7 @@ pipx install poetry
 
 Install dependencies for development.
 
-```
+```bash
 poetry install
 ```
 
