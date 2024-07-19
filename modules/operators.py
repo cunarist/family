@@ -129,17 +129,17 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
 
         targets = set[bpy.types.Object]()
         for selected_object in selected_objects:
-            targets.update(selected_object.children)  # type:ignore
+            targets.update(selected_object.children)
         for target in targets:
             target.select_set(True)
-        bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")  # type:ignore
+        bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
         for target in targets:
             target.select_set(False)
 
         for selected_object in selected_objects:
             selected_object.select_set(True)
 
-        bpy.ops.object.delete()  # type:ignore
+        bpy.ops.object.delete()
 
         return {"FINISHED"}
 
@@ -161,11 +161,11 @@ class DeleteHierarchy(bpy.types.Operator):
 
         targets: set[bpy.types.Object] = set(selected_objects)
         for selected_object in selected_objects:
-            targets.update(selected_object.children_recursive)  # type:ignore
+            targets.update(selected_object.children_recursive)
         for target in targets:
             target.select_set(True)
 
-        bpy.ops.object.delete()  # type:ignore
+        bpy.ops.object.delete()
 
         return {"FINISHED"}
 
@@ -183,15 +183,15 @@ class SelectRelated(bpy.types.Operator):
         ("CHILD", "Select Child", "", 1),
         ("PARENT", "Select Parent", "", 2),
     ]
-    direction: bpy.props.EnumProperty(  # type:ignore
+    direction: bpy.props.EnumProperty(
         name="Direction",
-        items=direction_items,  # type:ignore
+        items=direction_items,
         default="CHILD",
-    )
-    extend: bpy.props.BoolProperty(  # type:ignore
+    )  # type:ignore
+    extend: bpy.props.BoolProperty(
         name="Extend",
         default=True,
-    )
+    )  # type:ignore
 
     def execute(self, context: bpy.types.Context):
         selected_objects = context.selected_objects
