@@ -7,7 +7,9 @@ from .functions import (
 
 
 class DuplicateMoveHierarchy(bpy.types.Operator):
-    "Duplicate selected objects with all their recursive children and move them"
+    """
+    Duplicate selected objects with all their recursive children and move them
+    """
 
     bl_idname = "object.duplicate_move_hierarchy"
     bl_label = "Duplicate Hierarchy"
@@ -51,7 +53,10 @@ class DuplicateMoveHierarchy(bpy.types.Operator):
 
 
 class DuplicateMoveHierarchyLinked(bpy.types.Operator):
-    "Duplicate selected objects with all their recursive children, but not their object data, and move them"
+    """
+    Duplicate selected objects with all their recursive children,
+    but not their object data, and move them
+    """
 
     bl_idname = "object.duplicate_move_hierarchy_linked"
     bl_label = "Duplicate Hierarchy Linked"
@@ -95,7 +100,9 @@ class DuplicateMoveHierarchyLinked(bpy.types.Operator):
 
 
 class ShowDeleteMenu(bpy.types.Operator):
-    "Show options for performing deletion"
+    """
+    Show options for performing deletion
+    """
 
     bl_idname = "object.show_delete_menu"
     bl_label = "Show Delete Menu"
@@ -107,7 +114,9 @@ class ShowDeleteMenu(bpy.types.Operator):
 
 
 class DeleteKeepChildrenTransformation(bpy.types.Operator):
-    "Delete selected objects and keep their children's transformation"
+    """
+    Delete selected objects and keep their children's transformation
+    """
 
     bl_idname = "object.delete_keep_children_transformation"
     bl_label = "Delete and Keep Children's Transformation"
@@ -137,7 +146,9 @@ class DeleteKeepChildrenTransformation(bpy.types.Operator):
 
 
 class DeleteHierarchy(bpy.types.Operator):
-    "Delete selected objects including all their recursive children"
+    """
+    Delete selected objects including all their recursive children
+    """
 
     bl_idname = "object.delete_hierarchy"
     bl_label = "Delete Hierarchy"
@@ -161,7 +172,9 @@ class DeleteHierarchy(bpy.types.Operator):
 
 
 class SelectRelated(bpy.types.Operator):
-    "Select objects up or down the hierarchy"
+    """
+    Select objects up or down the hierarchy
+    """
 
     bl_idname = "object.select_hierarchy"
     bl_label = "Select Related"
@@ -215,7 +228,9 @@ class SelectRelated(bpy.types.Operator):
 
 
 class SelectHierarchy(bpy.types.Operator):
-    "Add all recursive children of selected objects to selection"
+    """
+    Add all recursive children of selected objects to selection
+    """
 
     bl_idname = "object.select_real_hierarchy"
     bl_label = "Select Hierarchy"
@@ -239,7 +254,11 @@ class SelectHierarchy(bpy.types.Operator):
 
 
 class RelateObjects(bpy.types.Operator):
-    "Make parent-child relationship keeping children's transform if objects other than the active one are selected, otherwise remove parent-child relationship keeping children's transform"
+    """
+    Make parent-child relationship keeping children's transform
+    if objects other than the active one are selected,
+    otherwise remove parent-child relationship keeping children's transform
+    """
 
     bl_idname = "object.relate_objects"
     bl_label = "Relate Objects"
