@@ -1,6 +1,6 @@
 # Command Line Scripts
 
-Prepare Poetry for dependency management
+Prepare Poetry for dependency management.
 
 ```bash
 pip install pipx
@@ -8,9 +8,9 @@ python -m pipx ensurepath
 pipx install poetry
 ```
 
-Install dependencies for development
+Install dependencies for development.
 
-```
+```bash
 poetry install
 ```
 
