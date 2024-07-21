@@ -168,29 +168,3 @@ class DeleteHierarchy(bpy.types.Operator):
         bpy.ops.object.delete()
 
         return {"FINISHED"}
-
-
-class SelectAllHierarchy(bpy.types.Operator):
-    """
-    Add all recursive children of selected objects to selection
-    """
-
-    bl_idname = "object.select_all_hierarchy"
-    bl_label = "Select Hierarchy"
-    bl_options = {"REGISTER", "UNDO"}
-
-    def execute(self, context: bpy.types.Context):
-        selected_objects = context.selected_objects
-
-        if len(selected_objects) == 0:
-            return {"PASS_THROUGH"}
-
-        targets = set[bpy.types.Object]()
-        for selected_object in selected_objects:
-            targets.update(selected_object.children_recursive)
-        for target in targets:
-            target.select_set(True)
-
-        set_root_object_active(context)
-
-        return {"FINISHED"}
