@@ -1,14 +1,27 @@
 import bpy
-from .modules import (
+from .operators import (
     DuplicateMoveHierarchy,
     DuplicateMoveHierarchyLinked,
     ShowDeleteMenu,
     DeleteKeepChildrenTransformation,
     DeleteHierarchy,
     SelectAllHierarchy,
-    DeleteMenu,
-    FamilySettings,
 )
+from .menus import DeleteMenu
+from .property_groups import FamilySettings
+
+__all__ = [
+    "DuplicateMoveHierarchy",
+    "DuplicateMoveHierarchyLinked",
+    "ShowDeleteMenu",
+    "DeleteKeepChildrenTransformation",
+    "DeleteHierarchy",
+    "SelectAllHierarchy",
+    "DeleteMenu",
+    "FamilySettings",
+    "DeleteMenu",
+]
+
 
 added_keymaps: list[tuple[bpy.types.KeyMap, bpy.types.KeyMapItem]] = []
 
