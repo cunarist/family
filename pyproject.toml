@@ -8,3 +8,6 @@ python = "^3.12"
 fake-bpy-module-latest = "^20240718"
 pyright = "*"
 ruff = "*"
+
+[tool.pyright]
+typeCheckingMode = "standard"
