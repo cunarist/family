@@ -6,9 +6,9 @@ from .functions import (
 
 
 class DuplicateMoveHierarchy(bpy.types.Operator):
-    """
-    Duplicate selected objects with all their recursive children and move them
-    """
+    """Duplicate selected objects, including all objects
+    that are connected through a parent-child relationship,
+    and move them"""
 
     bl_idname = "object.duplicate_move_hierarchy"
     bl_label = "Duplicate Hierarchy"
@@ -23,6 +23,11 @@ class DuplicateMoveHierarchy(bpy.types.Operator):
             targets = set[bpy.types.Object]()
             for selected_object in selected_objects:
                 targets.update(selected_object.children_recursive)
+                parent_object = selected_object.parent
+                while parent_object:
+                    targets.add(parent_object)
+                    targets.update(parent_object.children_recursive)
+                    parent_object = parent_object.parent
             for target in targets:
                 target.select_set(True)
 
@@ -41,6 +46,11 @@ class DuplicateMoveHierarchy(bpy.types.Operator):
             targets = set[bpy.types.Object]()
             for selected_object in selected_objects:
                 targets.update(selected_object.children_recursive)
+                parent_object = selected_object.parent
+                while parent_object:
+                    targets.add(parent_object)
+                    targets.update(parent_object.children_recursive)
+                    parent_object = parent_object.parent
             for target in targets:
                 target.select_set(True)
 
@@ -52,10 +62,9 @@ class DuplicateMoveHierarchy(bpy.types.Operator):
 
 
 class DuplicateMoveHierarchyLinked(bpy.types.Operator):
-    """
-    Duplicate selected objects with all their recursive children,
-    but not their object data, and move them
-    """
+    """Duplicate selected objects, including all objects
+    that are connected through a parent-child relationship,
+    but not their object data, and move them"""
 
     bl_idname = "object.duplicate_move_hierarchy_linked"
     bl_label = "Duplicate Hierarchy Linked"
@@ -70,6 +79,11 @@ class DuplicateMoveHierarchyLinked(bpy.types.Operator):
             targets = set[bpy.types.Object]()
             for selected_object in selected_objects:
                 targets.update(selected_object.children_recursive)
+                parent_object = selected_object.parent
+                while parent_object:
+                    targets.add(parent_object)
+                    targets.update(parent_object.children_recursive)
+                    parent_object = parent_object.parent
             for target in targets:
                 target.select_set(True)
 
@@ -88,6 +102,11 @@ class DuplicateMoveHierarchyLinked(bpy.types.Operator):
             targets = set[bpy.types.Object]()
             for selected_object in selected_objects:
                 targets.update(selected_object.children_recursive)
+                parent_object = selected_object.parent
+                while parent_object:
+                    targets.add(parent_object)
+                    targets.update(parent_object.children_recursive)
+                    parent_object = parent_object.parent
             for target in targets:
                 target.select_set(True)
 
@@ -99,9 +118,7 @@ class DuplicateMoveHierarchyLinked(bpy.types.Operator):
 
 
 class ShowDeleteMenu(bpy.types.Operator):
-    """
-    Show options for performing deletion
-    """
+    """Show options for performing deletion"""
 
     bl_idname = "object.show_delete_menu"
     bl_label = "Show Delete Menu"
@@ -112,42 +129,9 @@ class ShowDeleteMenu(bpy.types.Operator):
         return {"FINISHED"}
 
 
-class DeleteKeepChildrenTransformation(bpy.types.Operator):
-    """
-    Delete selected objects and keep their children's transformation
-    """
-
-    bl_idname = "object.delete_keep_children_transformation"
-    bl_label = "Delete and Keep Children's Transformation"
-    bl_options = {"REGISTER", "UNDO"}
-
-    def execute(self, context: bpy.types.Context):
-        selected_objects = context.selected_objects
-
-        if len(selected_objects) == 0:
-            return {"PASS_THROUGH"}
-
-        targets = set[bpy.types.Object]()
-        for selected_object in selected_objects:
-            targets.update(selected_object.children)
-        for target in targets:
-            target.select_set(True)
-        bpy.ops.object.parent_clear(type="CLEAR_KEEP_TRANSFORM")
-        for target in targets:
-            target.select_set(False)
-
-        for selected_object in selected_objects:
-            selected_object.select_set(True)
-
-        bpy.ops.object.delete()
-
-        return {"FINISHED"}
-
-
 class DeleteHierarchy(bpy.types.Operator):
-    """
-    Delete selected objects including all their recursive children
-    """
+    """Delete selected objects, including all objects
+    that are connected through a parent-child relationship"""
 
     bl_idname = "object.delete_hierarchy"
     bl_label = "Delete Hierarchy"
@@ -159,9 +143,14 @@ class DeleteHierarchy(bpy.types.Operator):
         if len(selected_objects) == 0:
             return {"PASS_THROUGH"}
 
-        targets: set[bpy.types.Object] = set(selected_objects)
+        targets = set[bpy.types.Object]()
         for selected_object in selected_objects:
             targets.update(selected_object.children_recursive)
+            parent_object = selected_object.parent
+            while parent_object:
+                targets.add(parent_object)
+                targets.update(parent_object.children_recursive)
+                parent_object = parent_object.parent
         for target in targets:
             target.select_set(True)
 

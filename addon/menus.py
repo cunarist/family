@@ -13,10 +13,6 @@ class DeleteMenu(bpy.types.Menu):
             text="Selected",
         )
         layout.operator(
-            operator="object.delete_keep_children_transformation",
-            text="Selected (Keep Children's Transformation)",
-        )
-        layout.operator(
             operator="object.delete_hierarchy",
             text="Hierarchy",
         )

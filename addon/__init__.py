@@ -3,7 +3,6 @@ from .operators import (
     DuplicateMoveHierarchy,
     DuplicateMoveHierarchyLinked,
     ShowDeleteMenu,
-    DeleteKeepChildrenTransformation,
     DeleteHierarchy,
 )
 from .menus import DeleteMenu
@@ -17,7 +16,6 @@ def draw_in_3d_view_object_menu(self: bpy.types.Menu, context: bpy.types.Context
     self.layout.separator()
     self.layout.operator(DuplicateMoveHierarchy.bl_idname)
     self.layout.operator(DuplicateMoveHierarchyLinked.bl_idname)
-    self.layout.operator(DeleteKeepChildrenTransformation.bl_idname)
     self.layout.operator(DeleteHierarchy.bl_idname)
 
 
@@ -31,7 +29,6 @@ def register():
     bpy.utils.register_class(DuplicateMoveHierarchy)
     bpy.utils.register_class(DuplicateMoveHierarchyLinked)
     bpy.utils.register_class(ShowDeleteMenu)
-    bpy.utils.register_class(DeleteKeepChildrenTransformation)
     bpy.utils.register_class(DeleteHierarchy)
 
     bpy.utils.register_class(DeleteMenu)
@@ -92,7 +89,6 @@ def unregister():
     bpy.utils.unregister_class(DuplicateMoveHierarchy)
     bpy.utils.unregister_class(DuplicateMoveHierarchyLinked)
     bpy.utils.unregister_class(ShowDeleteMenu)
-    bpy.utils.unregister_class(DeleteKeepChildrenTransformation)
     bpy.utils.unregister_class(DeleteHierarchy)
 
     bpy.utils.unregister_class(DeleteMenu)
