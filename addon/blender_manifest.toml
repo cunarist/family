@@ -3,7 +3,7 @@ schema_version = "1.0.0"
 # Example of manifest file for a Blender extension
 # Change the values according to your extension
 id = "family"
-version = "3.4.2"
+version = "3.5.0"
 name = "Family"
 tagline = "Duplicate and delete objects in hierarchy"
 maintainer = "Cunarist <cunarist@gmail.com>"
